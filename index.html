@@ -33,6 +33,7 @@
                 <img class="file-upload-image" id="face-image" src="#" alt="your image" />
                 <div class="result-messege"></div>
                 <div class="result-descr"></div>
+                <div class="result-celeb"></div>
                 <div class="result-image"></div>
                 <div id="label-container"></div>
                 <div class="image-title-wrap">
@@ -114,6 +115,7 @@
                 var resultMessege;
                 var resultImage;
                 var resultDescription;
+                var resultCeleb;
                 /* random puppy*/
                 var randomPuppy = [
                     'img/puppy/iu.jpg',
@@ -145,15 +147,15 @@
                 //random deer//
                 var randomDeer = [
                     'img/deer/yoona.jpg',
-                    'img/deer/yoona.jpg',
-                    'img/deer/yoona.jpg',
-                    'img/deer/yoona.jpg',
+                    'img/deer/goara.jpg',
+                    'img/deer/tzuy.jpg',
+                    'img/deer/leeyounhee.jpg',
                 ];
                 function getImgDeer() {
                     var img = '<img src="';
                     var randomIndex = Math.floor(Math.random() * randomDeer.length);
                     img += randomDeer[randomIndex];
-                    img += '" alt="Some alt text" style="height:100%;"/>';
+                    img += '" alt="Some alt text" style="width:100%;"/>';
                     return img;
                 }
                 //random dfox//
@@ -167,7 +169,7 @@
                     var img = '<img src="';
                     var randomIndex = Math.floor(Math.random() * randomDfox.length);
                     img += randomDfox[randomIndex];
-                    img += '" alt="Some alt text" style="height:100%;"/>';
+                    img += '" alt="Some alt text" style="width:100%;"/>';
                     return img;
                 }
                 //random cat//
@@ -181,7 +183,7 @@
                     var img = '<img src="';
                     var randomIndex = Math.floor(Math.random() * randomCat.length);
                     img += randomCat[randomIndex];
-                    img += '" alt="Some alt text" style="height:100%;"/>';
+                    img += '" alt="Some alt text" style="width:100%;"/>';
                     return img;
                 }
                 //random rabbit//
@@ -195,7 +197,7 @@
                     var img = '<img src="';
                     var randomIndex = Math.floor(Math.random() * randomRabbit.length);
                     img += randomRabbit[randomIndex];
-                    img += '" alt="Some alt text" style="height:100%;"/>';
+                    img += '" alt="Some alt text" style="width:100%;"/>';
                     return img;
                 }
                 var ranPuppy = getImgPuppy();
@@ -209,31 +211,37 @@
                         resultMessege = '강아지상';
                         resultImage = ranPuppy;
                         resultDescription = '동그란 눈에 사랑스러운 매력을 가진 당신, 누가 봐도 너무나도 사랑스러운 분이시네요!';
+                        resultCeleb = '강아지상 연예인 : 박보영, 아이유, 조보아, 채수빈, 한지민, etc..'
                         break;
                     case 'fox':
                         resultMessege = '여우상';
                         resultImage = ranFox;
                         resultDescription = '치명적인 눈빛의 소유자! 상대가 그 누구든 전부 홀릴수 있는 치명적인 당신!';
+                        resultCeleb = '여우상 연예인 : 경리, 김사랑, etc..';
                         break;
                     case 'deer':
                         resultMessege = '사슴상';
                         resultImage = ranDeer;
                         resultDescription = '가녀린 사슴을 닮은 당신, 청순한 매력으로 모두를 홀리시겠네요!';
+                        resultCeleb = '사슴상 연예인 : 윤아, 고아라, 이연희, 쯔위, etc..';
                         break;
                     case 'desert fox':
                         resultMessege = '사막여우상';
                         resultImage = ranDfox;
                         resultDescription = '귀여우면서도 한편으론 치명적인 매력을 가진 분이시네요!';
+                        resulCeleb = '사막여우상 연예인 : 지수, 제니, etc..';
                         break;
                     case 'rabbit':
                         resultMessege = '토끼상';
                         resultImage = ranRabbit;
                         resultDescription = '누가 봐도 귀엽고 사랑스러우시네요!';
+                        resultCeleb = '토끼상 연예인 : 수지, 나연, etc..';
                         break;
                     case 'cat':
                         resultMessege = '고양이상';
                         resultImage = ranCat;
                         resultDescription = '도도한 매력을 지닌, 사랑할수 밖에 없는 당신!';
+                        resultCeleb = '고양이상 연예인 : 안소희, 한예슬, 유인영, 차예련, etc..';
                         break;
                     default:
                         resultMessege = '알수없음';
@@ -241,6 +249,7 @@
                 $('.result-messege').html(resultMessege);
                 $('.result-image').html(resultImage);
                 $('.result-descr').html(resultDescription);
+                $('.result-celeb').html(resultCeleb);
             }
         </script>
     </body>
