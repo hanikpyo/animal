@@ -2,9 +2,10 @@ body {
     font-family: sans-serif;
     background-color: white;
 }
+
 img {
     max-width: 100%;
-    max-height: 100%;
+    height: auto;
     display: block;
     margin: auto auto;
 }
@@ -97,22 +98,22 @@ img {
 }
 
 .remove-image {
-    width: 13rem;
+    width: 10rem;
     margin: 0;
     color: #fff;
-    background: #cd4535;
+    background: lightskyblue;
     border: none;
     padding: 0.8rem;
     border-radius: 0.3rem;
-    border-bottom: 0.3rem solid #b02818;
     transition: all 0.2s ease;
     outline: none;
     text-transform: uppercase;
     font-weight: 700;
+    font-family: 'ImcreSoojin';
 }
 
 .remove-image:hover {
-    background: #c13b2a;
+    background: deepskyblue;
     color: #ffffff;
     transition: all 0.2s ease;
     cursor: pointer;
@@ -137,7 +138,10 @@ img {
     display: block;
     margin: 0 auto;
     width: 30rem;
-    height: 25rem;
+    height: auto;
+    margin-bottom: 0.5rem;
+    border: 0.8rem solid aquamarine;
+    border-radius: 0.5rem;
 }
 .result-messege {
     font-size: 3rem;
@@ -154,6 +158,23 @@ img {
     margin-bottom: 2rem;
     font-family: 'fromdamiM';
 }
+/*loading-spinner*/
+.spinner {
+    animation: spin 2s linear infinite;
+    font-size: 2rem;
+}
+@keyframes spin {
+    from {
+        transform: rotate(0);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+.text-center {   
+    font-family: 'Bazzi';
+}
+/*loading-spinner-end*/
 /*font-family*/
 @font-face {
     font-family: 'yg-jalnan';
@@ -183,6 +204,7 @@ img {
     font-weight: normal;
     font-style: normal;
 }
+@font-face { font-family: 'ImcreSoojin'; src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-04@2.3/ImcreSoojin.woff') format('woff'); font-weight: normal; font-style: normal; }
 /*font-family-end*/
 
 /*responsive*/
@@ -214,3 +236,5 @@ img {
     }
 }
 /*responsive-end*/
+
+

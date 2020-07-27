@@ -5,6 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>Document</title>
         <link rel="stylesheet" href="style.css" />
+        <script src="https://use.fontawesome.com/releases/v5.2.0/js/all.js"></script>
     </head>
     <body>
         <header>
@@ -31,14 +32,21 @@
             </div>
             <div class="file-upload-content">
                 <img class="file-upload-image" id="face-image" src="#" alt="your image" />
+                <div id="loading" class="animated bounce">
+                <div class="spinner" role="status">
+                    <i class="fas fa-spinner"></i>
+                    <span class="sr-only">Loading...</span>
+                </div>
+                <p class="text-center">AI가 당신의 동물상을 분석중입니다.</p>
+            </div>
                 <div class="result-messege"></div>
                 <div class="result-descr"></div>
                 <div class="result-celeb"></div>
                 <div class="result-image"></div>
                 <div id="label-container"></div>
                 <div class="image-title-wrap">
-                    <button type="button" onclick="removeUpload()" class="remove-image">
-                        Remove <span class="image-title">Uploaded Image</span>
+                    <button type="button" onclick="window.location.reload();" class="remove-image">
+                        <span class="try-again">다시 해보기~</span>
                     </button>
                 </div>
             </div>
@@ -61,6 +69,7 @@
                     init().then(() => {
                         console.log('hello');
                         predict();
+                        $('#loading').hide();
                     });
                 } else {
                     removeUpload();
@@ -133,9 +142,9 @@
                 //random fox//
                 var randomFox = [
                     'img/fox/kyoungri.jpg',
-                    'img/fox/kyoungri.jpg',
-                    'img/fox/kyoungri.jpg',
-                    'img/fox/kyoungri.jpg',
+                    'img/fox/kyoungri2.jpg',
+                    'img/fox/kimlove.jpg',
+                    'img/fox/kimlove2.jpg',
                 ];
                 function getImgFox() {
                     var img = '<img src="';
@@ -147,7 +156,7 @@
                 //random deer//
                 var randomDeer = [
                     'img/deer/yoona.jpg',
-                    'img/deer/goara.jpg',
+                    'img/deer/goara2.jpg',
                     'img/deer/tzuy.jpg',
                     'img/deer/leeyounhee.jpg',
                 ];
@@ -161,9 +170,9 @@
                 //random dfox//
                 var randomDfox = [
                     'img/desertfox/jisu.jpg',
-                    'img/desertfox/jisu.jpg',
-                    'img/desertfox/jisu.jpg',
-                    'img/desertfox/jisu.jpg',
+                    'img/desertfox/jisu2.jpg',
+                    'img/desertfox/jenny.jpg',
+                    'img/desertfox/sana.jpg',
                 ];
                 function getImgDfox() {
                     var img = '<img src="';
@@ -189,9 +198,9 @@
                 //random rabbit//
                  var randomRabbit = [
                     'img/rabbit/suzy.png',
-                    'img/rabbit/suzy.png',
-                    'img/rabbit/suzy.png',
-                    'img/rabbit/suzy.png',
+                    'img/rabbit/nayeon.png',
+                    'img/rabbit/irine.png',
+                    'img/rabbit/rosi.png',
                 ];
                 function getImgRabbit() {
                     var img = '<img src="';
@@ -212,6 +221,7 @@
                         resultImage = ranPuppy;
                         resultDescription = '동그란 눈에 사랑스러운 매력을 가진 당신, 누가 봐도 너무나도 사랑스러운 분이시네요!';
                         resultCeleb = '강아지상 연예인 : 박보영, 아이유, 조보아, 채수빈, 한지민, etc..'
+                        /*귀엽고 사랑스러운 매력의 강아지상*/
                         break;
                     case 'fox':
                         resultMessege = '여우상';
@@ -224,6 +234,7 @@
                         resultImage = ranDeer;
                         resultDescription = '가녀린 사슴을 닮은 당신, 청순한 매력으로 모두를 홀리시겠네요!';
                         resultCeleb = '사슴상 연예인 : 윤아, 고아라, 이연희, 쯔위, etc..';
+                        /*보호 본능을 자극하는 사슴상*/
                         break;
                     case 'desert fox':
                         resultMessege = '사막여우상';
@@ -235,13 +246,15 @@
                         resultMessege = '토끼상';
                         resultImage = ranRabbit;
                         resultDescription = '누가 봐도 귀엽고 사랑스러우시네요!';
-                        resultCeleb = '토끼상 연예인 : 수지, 나연, etc..';
+                        resultCeleb = '토끼상 연예인 : 수지, 나연, 로시, 아이린, etc..';
+                        /*발랄하고 생기 넘치는 토끼상*/
                         break;
                     case 'cat':
                         resultMessege = '고양이상';
                         resultImage = ranCat;
                         resultDescription = '도도한 매력을 지닌, 사랑할수 밖에 없는 당신!';
                         resultCeleb = '고양이상 연예인 : 안소희, 한예슬, 유인영, 차예련, etc..';
+                        /*우아하고 도회적인 이미지의 고양이상*/
                         break;
                     default:
                         resultMessege = '알수없음';
