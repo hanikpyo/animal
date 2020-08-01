@@ -9,12 +9,20 @@ img {
     display: block;
     margin: auto auto;
 }
-
+ul li {
+    list-style:none;
+    margin-left:-1rem;
+    text-align:left;
+    margin-bottom: 5em;
+    margin-top:3rem;
+    font-size:1.5rem;
+}
 .file-upload {
     background-color: #ffffff;
-    width: 40rem;
+    width: 100%;
     margin: 0 auto;
-    padding: 2rem;
+    border: 0.2rem solid gray;
+    border-radius:1rem;
 }
 
 .file-upload-btn {
@@ -51,8 +59,7 @@ img {
 
 .file-upload-input {
     position: absolute;
-    margin: 0;
-    padding: 0;
+    margin:0;
     width: 100%;
     height: 100%;
     outline: none;
@@ -61,11 +68,12 @@ img {
 }
 
 .image-upload-wrap {
-    margin-top: 2rem;
+    margin: 5rem auto;
     border: 0.3rem solid lightgray;
     position: relative;
     height: 20rem;
     border-radius: 1rem;
+    width:40rem;
 }
 
 .image-dropping,
@@ -130,9 +138,99 @@ img {
     margin-top: 2.5rem;
 }
 .header {
+    display:inline-block;
+    text-align: center;
+    width:100%;
+    border: 0.2rem solid gray;
+    border-radius: 1rem;
+    margin-bottom:0.3rem;
+}
+/*menu*/
+.menu {
+    display:inline-block;
+    float:left;
+    margin-top:1.5rem;
+    margin-left: 2rem;
+}
+input[id="menuicon"] {
+    display:none;
+}
+input[id="menuicon"] + label {
+    display:block;
+    width:4rem;
+    height: 3rem;
+    position: relative;
+    cursor:pointer;
+    z-index:1;
+}
+input[id="menuicon"] + label span {
+    display:block;
+    position:absolute;
+    width:100%;
+    height:0.35rem;
+    border-radius:0.2rem;
+    background:#000;
+    transition: all .35s;
+}
+input[id="menuicon"] + label span:nth-child(1) {
+    top:0;
+}
+input[id="menuicon"] + label span:nth-child(2) {
+    top:50%;
+    transform:translateY(-50%);
+}
+input[id="menuicon"] + label span:nth-child(3) {
+    bottom:0;
+}
+
+input[id="menuicon"]:checked + label span:nth-child(1) {
+    top:100%;
+    width:50%;
+    margin-left: 8%;
+    transform:translateY(-50%) rotate(45deg); 
+}
+input[id="menuicon"]:checked + label span:nth-child(2) {
+    transform:translateY(50%) rotate(90deg);
+}
+input[id="menuicon"]:checked + label span:nth-child(3) {
+    bottom:0;
+    width:50%;
+    margin-left:42%;
+    transform:translateY(50%) rotate(-45deg);
+}
+div[class="sidebar"] {
+    width:18rem; 
+    height:80%;
+    background:linen;
+    position:fixed;
+    top:-100%;
+    left:0.5rem;
+    z-index:2;
+    transition:all .35s;
+    border-radius:1rem;
+    border:1px solid lightslategray;
+}
+input[id="menuicon"]:checked + label + div {
+    top: 7.6rem;
+}
+/*menu-end*/
+
+.header-logo {
+    display:inline-block;
+    float:left;
+    margin-top:1.2rem;
+    margin-left: 3rem;
+}
+.logo-img {
+    height: 3.5rem;
+    width:auto;
+}
+.header-title {
     text-align: center;
     font-size: 5rem;
     font-family: 'MaplestoryOTFBold';
+    display:inline-block;
+    margin-left:-10rem;
 }
 .result-image {
     display: block;

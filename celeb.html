@@ -1,0 +1,1330 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <title>Document</title>
+        <link rel="stylesheet" href="style.css" />
+        <script src="https://use.fontawesome.com/releases/v5.2.0/js/all.js"></script>
+    </head>
+    <body>
+        <header class="header">
+            <div class="menu">
+                <input type="checkbox" id="menuicon" />
+                <label for="menuicon">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </label>
+                <div class="sidebar">
+                    <ul>
+                        <li>Home</li>
+                        <li>닮은꼴</li>
+                        <li>목소리</li>
+                        <li>개인기</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="header-logo">
+                <a href="index.html"> <img src="img/leaf.png" class="logo-img" /></a>
+            </div>
+            <div class="header-title">
+                닮은꼴 찾기
+            </div>
+        </header>
+
+        <script
+            class="jsbin"
+            src="https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"
+        ></script>
+        <div class="file-upload">
+            <div class="image-upload-wrap">
+                <input
+                    class="file-upload-input"
+                    type="file"
+                    onchange="readURL(this);"
+                    accept="image/*"
+                />
+                <div class="drag-text">
+                    <img src="img/upload.png" class="upload" />
+                </div>
+            </div>
+            <div class="file-upload-content">
+                <img class="file-upload-image" id="face-image" src="#" alt="your image" />
+                <div id="loading" class="animated bounce">
+                    <div class="spinner" role="status">
+                        <i class="fas fa-spinner"></i>
+                        <span class="sr-only">Loading...</span>
+                    </div>
+                    <p class="text-center">AI가 당신의 닮은꼴을 분석중입니다.</p>
+                </div>
+                <div class="result-messege"></div>
+                <div class="result-descr"></div>
+                <div class="result-celeb"></div>
+                <div class="result-image"></div>
+                <div id="label-container"></div>
+                <div class="image-title-wrap">
+                    <button type="button" onclick="window.location.reload();" class="remove-image">
+                        <span class="try-again">다시 해보기~</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div id="webcam-container"></div>
+
+        <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@1.3.1/dist/tf.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/@teachablemachine/image@0.8/dist/teachablemachine-image.min.js"></script>
+        <script>
+            function readURL(input) {
+                if (input.files && input.files[0]) {
+                    var reader = new FileReader();
+                    reader.onload = function (e) {
+                        $('.image-upload-wrap').hide();
+                        $('.file-upload-image').attr('src', e.target.result);
+                        $('.file-upload-content').show();
+                        $('.image-title').html(input.files[0].name);
+                    };
+                    reader.readAsDataURL(input.files[0]);
+                    init().then(() => {
+                        console.log('hello');
+                        predict();
+                        $('#loading').hide();
+                    });
+                } else {
+                    removeUpload();
+                }
+            }
+            function removeUpload() {
+                $('.file-upload-input').replaceWith($('.file-upload-input').clone());
+                $('.file-upload-content').hide();
+                $('.image-upload-wrap').show();
+            }
+            $('.image-upload-wrap').bind('dragover', function () {
+                $('.image-upload-wrap').addClass('image-dropping');
+            });
+            $('.image-upload-wrap').bind('dragleave', function () {
+                $('.image-upload-wrap').removeClass('image-dropping');
+            });
+        </script>
+        <div id="label-container"></div>
+        <script type="text/javascript">
+            // More API functions here:
+            // https://github.com/googlecreativelab/teachablemachine-community/tree/master/libraries/image
+
+            // the link to your model provided by Teachable Machine export panel
+            const URL = 'https://teachablemachine.withgoogle.com/models/ZXZ7xSsYE/';
+
+            let model, labelContainer, maxPredictions;
+
+            // Load the image model and setup the webcam
+            async function init() {
+                const modelURL = URL + 'model.json';
+                const metadataURL = URL + 'metadata.json';
+
+                // load the model and metadata
+                // Refer to tmImage.loadFromFiles() in the API to support files from a file picker
+                // or files from your local hard drive
+                // Note: the pose library adds "tmImage" object to your window (window.tmImage)
+                model = await tmImage.load(modelURL, metadataURL);
+                maxPredictions = model.getTotalClasses();
+                // append elements to the DOM
+                labelContainer = document.getElementById('label-container');
+                for (let i = 0; i < maxPredictions; i++) {
+                    // and class labels
+                    labelContainer.appendChild(document.createElement('div'));
+                }
+            }
+
+             // run the webcam image through the image model
+            async function predict() {
+                // predict can take in an image, video or canvas html element
+                var image = document.getElementById('face-image')
+                const prediction = await model.predict(image, false);
+                prediction.sort((a, b) => parseFloat(b.probability) - parseFloat(a.probability));
+                console.log(prediction[0].className);
+                var resultMessege;
+                var resultImage;
+                
+                var ahnsohee = [
+                    'img/similar/sohee.jpg',
+                    'img/similar/sohee2.jpg',
+                    'img/similar/sohee1.jpg',
+                ];
+                function getImgAhnsohee() {
+                    var img = '<img src="';
+                    var randomIndex = Math.floor(Math.random() * ahnsohee.length);
+                    img += ahnsohee[randomIndex];
+                    img += '" alt="Some alt text" style="width:100%;"/>';
+                    return img;
+                }
+                var baekjinhee = [
+                    'img/similar/bjinhee.jpg',
+                    'img/similar/bjinhee1.jpg',
+                ];
+                function getImgBaekjinhee() {
+                    var img = '<img src="';
+                    var randomIndex = Math.floor(Math.random() * baekjinhee.length);
+                    img += baekjinhee[randomIndex];
+                    img += '" alt="Some alt text" style="width:100%;"/>';
+                    return img;
+                }
+                var blackpinkjisu = [
+                    'img/similar/bpinkjisu.jpg',
+                    'img/similar/bpinkjisu1.jpg',
+                    'img/similar/bpinkjisu2.jpg',
+                ];
+                function getImgBlackpinkjisu() {
+                    var img = '<img src="';
+                    var randomIndex = Math.floor(Math.random() * blackpinkjisu.length);
+                    img += blackpinkjisu[randomIndex];
+                    img += '" alt="Some alt text" style="width:100%;"/>';
+                    return img;
+                }
+                var chaesubin = [
+                    'img/similar/chaesubin.jpg',
+                    'img/similar/chaesubin1.jpg',
+                    'img/similar/chaesubin2.jpg',
+                ];
+                function getImgChaesubin() {
+                    var img = '<img src="';
+                    var randomIndex = Math.floor(Math.random() * chaesubin.length);
+                    img += chaesubin[randomIndex];
+                    img += '" alt="Some alt text" style="width:100%;"/>';
+                    return img;
+                }
+                var cheonuhee = [
+                    'img/similar/cheonuhee.jpg',
+                    'img/similar/cheonuhee1.jpg',
+                    'img/similar/cheonuhee2.jpg',
+                ];
+                function getImgcheonuhee() {
+                    var img = '<img src="';
+                    var randomIndex = Math.floor(Math.random() * cheonuhee.length);
+                    img += cheonuhee[randomIndex];
+                    img += '" alt="Some alt text" style="width:100%;"/>';
+                    return img;
+                }
+                 var dahyun = [
+                    'img/similar/dahyun.jpg',
+                    'img/similar/dahyun1.jpg',
+                    'img/similar/dahyun2.jpg',
+                ];
+                function getImgdahyun() {
+                    var img = '<img src="';
+                    var randomIndex = Math.floor(Math.random() * dahyun.length);
+                    img += dahyun[randomIndex];
+                    img += '" alt="Some alt text" style="width:100%;"/>';
+                    return img;
+                }
+                var goara = [
+                    'img/similar/goara.jpg',
+                    'img/similar/goara1.jpg',
+                    'img/similar/goara2.jpg',
+                ];
+                function getImggoara() {
+                    var img = '<img src="';
+                    var randomIndex = Math.floor(Math.random() * goara.length);
+                    img += goara[randomIndex];
+                    img += '" alt="Some alt text" style="width:100%;"/>';
+                    return img;
+                }
+                 var gosunghee = [
+                    'img/similar/gosunghee.jpg',
+                    'img/similar/gosunghee1.jpg',
+                    'img/similar/gosunghee2.jpg',
+                ];
+                function getImggosunghee() {
+                    var img = '<img src="';
+                    var randomIndex = Math.floor(Math.random() * gosunghee.length);
+                    img += gosunghee[randomIndex];
+                    img += '" alt="Some alt text" style="width:100%;"/>';
+                    return img;
+                }
+                var gouri = [
+                    'img/similar/gouri.jpg',
+                    'img/similar/gouri1.jpg',
+                    'img/similar/gouri2.jpg',
+                ];
+                function getImggouri() {
+                    var img = '<img src="';
+                    var randomIndex = Math.floor(Math.random() * gouri.length);
+                    img += gouri[randomIndex];
+                    img += '" alt="Some alt text" style="width:100%;"/>';
+                    return img;
+                }
+                var gugudanmina = [
+                    'img/similar/gugudanmina1.jpg',
+                    'img/similar/gugudanmina2.jpg',
+                    'img/similar/gugudanmina.png',
+                ];
+                function getImggugudanmina() {
+                    var img = '<img src="';
+                    var randomIndex = Math.floor(Math.random() * gugudanmina.length);
+                    img += gugudanmina[randomIndex];
+                    img += '" alt="Some alt text" style="width:100%;"/>';
+                    return img;
+                }
+                var guhyesun = [
+                    'img/similar/guhyesun.jpg',
+                    'img/similar/guhyesun1.jpg',
+                    'img/similar/guhyesun2.jpg',
+                ];
+                function getImgguhyesun() {
+                    var img = '<img src="';
+                    var randomIndex = Math.floor(Math.random() * guhyesun.length);
+                    img += guhyesun[randomIndex];
+                    img += '" alt="Some alt text" style="width:100%;"/>';
+                    return img;
+                }
+                var hanchaea = [
+                    'img/similar/hanchaea.jpg',
+                    'img/similar/hanchaea1.jpg',
+                    'img/similar/hanchaea2.jpg',
+                ];
+                function getImghanchaea() {
+                    var img = '<img src="';
+                    var randomIndex = Math.floor(Math.random() * hanchaea.length);
+                    img += hanchaea[randomIndex];
+                    img += '" alt="Some alt text" style="width:100%;"/>';
+                    return img;
+                }
+                var hangain = [
+                    'img/similar/hangain.jpg',
+                    'img/similar/hangain1.jpg',
+                    'img/similar/hangain2.jpg',
+                ];
+                function getImghangain() {
+                    var img = '<img src="';
+                    var randomIndex = Math.floor(Math.random() * hangain.length);
+                    img += hangain[randomIndex];
+                    img += '" alt="Some alt text" style="width:100%;"/>';
+                    return img;
+                }
+                 var hanhyoju = [
+                    'img/similar/hanhyoju.jpg',
+                    'img/similar/hanhyoju1.jpg',
+                    'img/similar/hanhyoju2.jpg',
+                ];
+                function getImghanhyoju() {
+                    var img = '<img src="';
+                    var randomIndex = Math.floor(Math.random() * hanhyoju.length);
+                    img += hanhyoju[randomIndex];
+                    img += '" alt="Some alt text" style="width:100%;"/>';
+                    return img;
+                }
+                var hanjimin = [
+                    'img/similar/hanjimin.jpg',
+                    'img/similar/hanjimin1.jpg',
+                    'img/similar/hanjimin2.jpg',
+                ];
+                function getImghanjimin() {
+                    var img = '<img src="';
+                    var randomIndex = Math.floor(Math.random() * hanjimin.length);
+                    img += hanjimin[randomIndex];
+                    img += '" alt="Some alt text" style="width:100%;"/>';
+                    return img;
+                }
+                var hanyeseul = [
+                    'img/similar/hanyeseul.jpg',
+                    'img/similar/hanyeseul1.jpg',
+                    'img/similar/hanyeseul2.jpg',
+                ];
+                function getImghanyeseul() {
+                    var img = '<img src="';
+                    var randomIndex = Math.floor(Math.random() * hanyeseul.length);
+                    img += hanyeseul[randomIndex];
+                    img += '" alt="Some alt text" style="width:100%;"/>';
+                    return img;
+                }
+                var hyeri = [
+                    'img/similar/hyeri.jpg',
+                    'img/similar/hyeri1.jpg',
+                    'img/similar/hyeri2.jpg',
+                ];
+                function getImghyeri() {
+                    var img = '<img src="';
+                    var randomIndex = Math.floor(Math.random() * hyeri.length);
+                    img += hyeri[randomIndex];
+                    img += '" alt="Some alt text" style="width:100%;"/>';
+                    return img;
+                }
+                var irin = [
+                    'img/similar/irin.jpg',
+                    'img/similar/irin1.jpg',
+                    'img/similar/irin2.jpg',
+                ];
+                function getImgirin() {
+                    var img = '<img src="';
+                    var randomIndex = Math.floor(Math.random() * irin.length);
+                    img += irin[randomIndex];
+                    img += '" alt="Some alt text" style="width:100%;"/>';
+                    return img;
+                }
+                var imsuhyang = [
+                    'img/similar/imsuhyang.jpg',
+                    'img/similar/imsuhyang1.jpg',
+                    'img/similar/imsuhyang2.jpg',
+                ];
+                function getImgimsuhyang() {
+                    var img = '<img src="';
+                    var randomIndex = Math.floor(Math.random() * imsuhyang.length);
+                    img += imsuhyang[randomIndex];
+                    img += '" alt="Some alt text" style="width:100%;"/>';
+                    return img;
+                }
+                var jangnara = [
+                    'img/similar/jangnara.jpg',
+                    'img/similar/jangnara1.jpg',
+                    'img/similar/jangnara2.jpg',
+                ];
+                function getImgjangnara() {
+                    var img = '<img src="';
+                    var randomIndex = Math.floor(Math.random() * jangnara.length);
+                    img += jangnara[randomIndex];
+                    img += '" alt="Some alt text" style="width:100%;"/>';
+                    return img;
+                }
+                var jangwonyoung = [
+                    'img/similar/jangwonyoung.jpg',
+                    'img/similar/jangwonyoung1.jpg',
+                    'img/similar/jangwonyoung2.jpg',
+                ];
+                function getImgjangwonyoung() {
+                    var img = '<img src="';
+                    var randomIndex = Math.floor(Math.random() * jangwonyoung.length);
+                    img += jangwonyoung[randomIndex];
+                    img += '" alt="Some alt text" style="width:100%;"/>';
+                    return img;
+                }
+                var jenny = [
+                    'img/similar/jenny.jpg',
+                    'img/similar/jenny1.jpg',
+                    'img/similar/jenny2.jpg',
+                ];
+                function getImgjenny() {
+                    var img = '<img src="';
+                    var randomIndex = Math.floor(Math.random() * jenny.length);
+                    img += jenny[randomIndex];
+                    img += '" alt="Some alt text" style="width:100%;"/>';
+                    return img;
+                }
+                var jeongchaeyeon = [
+                    'img/similar/jeongchaeyeon.jpg',
+                    'img/similar/jeongchaeyeon1.jpg',
+                    'img/similar/jeongchaeyeon2.jpg',
+                ];
+                function getImgjeongchaeyeon() {
+                    var img = '<img src="';
+                    var randomIndex = Math.floor(Math.random() * jeongchaeyeon.length);
+                    img += jeongchaeyeon[randomIndex];
+                    img += '" alt="Some alt text" style="width:100%;"/>';
+                    return img;
+                }
+                var jeongsomin = [
+                    'img/similar/jeongsomin.jpg',
+                    'img/similar/jeongsomin1.jpg',
+                    'img/similar/jeongsomin2.jpg',
+                ];
+                function getImgjeongsomin() {
+                    var img = '<img src="';
+                    var randomIndex = Math.floor(Math.random() * jeongsomin.length);
+                    img += jeongsomin[randomIndex];
+                    img += '" alt="Some alt text" style="width:100%;"/>';
+                    return img;
+                }
+                var jeonjihyun = [
+                    'img/similar/jeonjihyun.jpg',
+                    'img/similar/jeonjihyun1.jpg',
+                    'img/similar/jeonjihyun2.jpg',
+                ];
+                function getImgjeonjihyun() {
+                    var img = '<img src="';
+                    var randomIndex = Math.floor(Math.random() * jeonjihyun.length);
+                    img += jeonjihyun[randomIndex];
+                    img += '" alt="Some alt text" style="width:100%;"/>';
+                    return img;
+                }
+                var jeonsomin = [
+                    'img/similar/jeonsomin.jpg',
+                    'img/similar/jeonsomin1.jpg',
+                    'img/similar/jeonsomin2.jpg',
+                ];
+                function getImgjeonsomin() {
+                    var img = '<img src="';
+                    var randomIndex = Math.floor(Math.random() * jeonsomin.length);
+                    img += jeonsomin[randomIndex];
+                    img += '" alt="Some alt text" style="width:100%;"/>';
+                    return img;
+                }
+                var jinseyeon = [
+                    'img/similar/jinseyeon.jpg',
+                    'img/similar/jinseyeon1.jpg',
+                    'img/similar/jinseyeon2.jpg',
+                ];
+                function getImgjinseyeon() {
+                    var img = '<img src="';
+                    var randomIndex = Math.floor(Math.random() * jinseyeon.length);
+                    img += jinseyeon[randomIndex];
+                    img += '" alt="Some alt text" style="width:100%;"/>';
+                    return img;
+                }
+                var choboa = [
+                    'img/similar/choboa.jpg',
+                    'img/similar/choboa1.jpg',
+                    'img/similar/choboa2.jpg',
+                ];
+                function getImgchoboa() {
+                    var img = '<img src="';
+                    var randomIndex = Math.floor(Math.random() * choboa.length);
+                    img += choboa[randomIndex];
+                    img += '" alt="Some alt text" style="width:100%;"/>';
+                    return img;
+                }
+                var kanghyejeong = [
+                    'img/similar/kanghyejeong.jpg',
+                ];
+                function getImgkanghyejeong() {
+                    var img = '<img src="';
+                    var randomIndex = Math.floor(Math.random() * kanghyejeong.length);
+                    img += kanghyejeong[randomIndex];
+                    img += '" alt="Some alt text" style="width:100%;"/>';
+                    return img;
+                }
+                var kanghanna = [
+                    'img/similar/kanghanna.jpg',
+                    'img/similar/kanghanna1.jpg',
+                    'img/similar/kanghanna2.jpg',
+                ];
+                function getImgkanghanna() {
+                    var img = '<img src="';
+                    var randomIndex = Math.floor(Math.random() * kanghanna.length);
+                    img += kanghanna[randomIndex];
+                    img += '" alt="Some alt text" style="width:100%;"/>';
+                    return img;
+                }
+                var kangminkyoung = [
+                    'img/similar/kangminkyoung.jpg',
+                    'img/similar/kangminkyoung1.jpg',
+                    'img/similar/kangminkyoung2.jpg',
+                ];
+                function getImgkangminkyoung() {
+                    var img = '<img src="';
+                    var randomIndex = Math.floor(Math.random() * kangminkyoung.length);
+                    img += kangminkyoung[randomIndex];
+                    img += '" alt="Some alt text" style="width:100%;"/>';
+                    return img;
+                }
+                var kimheesun = [
+                    'img/similar/kimheesun.jpg',
+                    'img/similar/kimheesun1.jpg',
+                    'img/similar/kimheesun2.jpg',
+                ];
+                function getImgkimheesun() {
+                    var img = '<img src="';
+                    var randomIndex = Math.floor(Math.random() * kimheesun.length);
+                    img += kimheesun[randomIndex];
+                    img += '" alt="Some alt text" style="width:100%;"/>';
+                    return img;
+                }
+                var kimminjung = [
+                    'img/similar/kimminjung.jpg',
+                    'img/similar/kimminjung1.jpg',
+                    'img/similar/kimminjung2.jpg',
+                ];
+                function getImgkimminjung() {
+                    var img = '<img src="';
+                    var randomIndex = Math.floor(Math.random() * kimminjung.length);
+                    img += kimminjung[randomIndex];
+                    img += '" alt="Some alt text" style="width:100%;"/>';
+                    return img;
+                }
+                var kimsarang = [
+                    'img/similar/kimsarang.jpg',
+                    'img/similar/kimsarang1.jpg',
+                    'img/similar/kimsarang2.jpg',
+                ];
+                function getImgkimsarang() {
+                    var img = '<img src="';
+                    var randomIndex = Math.floor(Math.random() * kimsarang.length);
+                    img += kimsarang[randomIndex];
+                    img += '" alt="Some alt text" style="width:100%;"/>';
+                    return img;
+                }
+                var kimsejeong = [
+                    'img/similar/kimsejeong.jpg',
+                    'img/similar/kimsejeong1.jpg',
+                    'img/similar/kimsejeong2.jpg',
+                ];
+                function getImgkimsejeong() {
+                    var img = '<img src="';
+                    var randomIndex = Math.floor(Math.random() * kimsejeong.length);
+                    img += kimsejeong[randomIndex];
+                    img += '" alt="Some alt text" style="width:100%;"/>';
+                    return img;
+                }
+                var kimtaehee = [
+                    'img/similar/kimtaehee.jpg',
+                    'img/similar/kimtaehee1.jpg',
+                    'img/similar/kimtaehee2.jpg',
+                ];
+                function getImgkimtaehee() {
+                    var img = '<img src="';
+                    var randomIndex = Math.floor(Math.random() * kimtaehee.length);
+                    img += kimtaehee[randomIndex];
+                    img += '" alt="Some alt text" style="width:100%;"/>';
+                    return img;
+                }
+                var kimtaeri = [
+                    'img/similar/kimtaeri.jpg',
+                    'img/similar/kimtaeri1.jpg',
+                    'img/similar/kimtaeri2.jpg',
+                ];
+                function getImgkimtaeri() {
+                    var img = '<img src="';
+                    var randomIndex = Math.floor(Math.random() * kimtaeri.length);
+                    img += kimtaeri[randomIndex];
+                    img += '" alt="Some alt text" style="width:100%;"/>';
+                    return img;
+                }
+                var kimyujeong = [
+                    'img/similar/kimyujeong1.jpg',
+                    'img/similar/kimyujeong.png',
+                    'img/similar/kimyujeong2.jpg',
+                ];
+                function getImgkimyujeong() {
+                    var img = '<img src="';
+                    var randomIndex = Math.floor(Math.random() * kimyujeong.length);
+                    img += kimyujeong[randomIndex];
+                    img += '" alt="Some alt text" style="width:100%;"/>';
+                    return img;
+                }
+                var kyoungri = [
+                    'img/similar/kyoungri.jpg',
+                    'img/similar/kyoungri1.jpg',
+                    'img/similar/kyoungri2.jpg',
+                ];
+                function getImgkyoungri() {
+                    var img = '<img src="';
+                    var randomIndex = Math.floor(Math.random() * kyoungri.length);
+                    img += kyoungri[randomIndex];
+                    img += '" alt="Some alt text" style="width:100%;"/>';
+                    return img;
+                }
+                var kyoungsujin = [
+                    'img/similar/kyoungsujin.jpg',
+                    'img/similar/kyoungsujin1.jpg',
+                    'img/similar/kyoungsujin2.jpg',
+                ];
+                function getImgkyoungsujin() {
+                    var img = '<img src="';
+                    var randomIndex = Math.floor(Math.random() * kyoungsujin.length);
+                    img += kyoungsujin[randomIndex];
+                    img += '" alt="Some alt text" style="width:100%;"/>';
+                    return img;
+                }
+                var idahee = [
+                    'img/similar/idahee.jpg',
+                    'img/similar/idahee1.jpg',
+                    'img/similar/idahee2.jpg',
+                ];
+                function getImgidahee() {
+                    var img = '<img src="';
+                    var randomIndex = Math.floor(Math.random() * idahee.length);
+                    img += idahee[randomIndex];
+                    img += '" alt="Some alt text" style="width:100%;"/>';
+                    return img;
+                }
+                var iminjeong = [
+                    'img/similar/iminjeong.jpg',
+                    'img/similar/iminjeong1.jpg',
+                    'img/similar/iminjeong2.jpg',
+                ];
+                function getImgiminjeong() {
+                    var img = '<img src="';
+                    var randomIndex = Math.floor(Math.random() * iminjeong.length);
+                    img += iminjeong[randomIndex];
+                    img += '" alt="Some alt text" style="width:100%;"/>';
+                    return img;
+                }
+                var inayeong = [
+                    'img/similar/inayeong.jpg',
+                    'img/similar/inayeong2.jpg',
+                    'img/similar/inayeong1.jpg',
+                ];
+                function getImginayeong() {
+                    var img = '<img src="';
+                    var randomIndex = Math.floor(Math.random() * inayeong.length);
+                    img += inayeong[randomIndex];
+                    img += '" alt="Some alt text" style="width:100%;"/>';
+                    return img;
+                }
+                var isiyeong = [
+                    'img/similar/isiyeong.jpg',
+                    'img/similar/isiyeong1.jpg',
+                    'img/similar/isiyeong2.jpg',
+                ];
+                function getImgisiyeong() {
+                    var img = '<img src="';
+                    var randomIndex = Math.floor(Math.random() * isiyeong.length);
+                    img += isiyeong[randomIndex];
+                    img += '" alt="Some alt text" style="width:100%;"/>';
+                    return img;
+                }
+                var iseongkyiung = [
+                    'img/similar/iseongkyiung.jpg',
+                    'img/similar/iseongkyiung1.jpg',
+                    'img/similar/iseongkyiung2.jpg',
+                ];
+                function getImgiseongkyiung() {
+                    var img = '<img src="';
+                    var randomIndex = Math.floor(Math.random() * iseongkyiung.length);
+                    img += iseongkyiung[randomIndex];
+                    img += '" alt="Some alt text" style="width:100%;"/>';
+                    return img;
+                }
+                var iseyoung = [
+                    'img/similar/iseyoung.jpg',
+                    'img/similar/iseyoung1.jpg',
+                    'img/similar/iseyoung2.jpg',
+                ];
+                function getImgiseyoung() {
+                    var img = '<img src="';
+                    var randomIndex = Math.floor(Math.random() * iseyoung.length);
+                    img += iseyoung[randomIndex];
+                    img += '" alt="Some alt text" style="width:100%;"/>';
+                    return img;
+                }
+                var iyeonhee = [
+                    'img/similar/iyeonhee.jpg',
+                    'img/similar/iyeonhee1.png',
+                    'img/similar/iyeonhee2.jpg',
+                ];
+                function getImgiyeonhee() {
+                    var img = '<img src="';
+                    var randomIndex = Math.floor(Math.random() * iyeonhee.length);
+                    img += iyeonhee[randomIndex];
+                    img += '" alt="Some alt text" style="width:100%;"/>';
+                    return img;
+                }
+                var lovelysjisu = [
+                    'img/similar/lovelysjisu.jpg',
+                    'img/similar/lovelysjisu1.jpg',
+                    'img/similar/lovelysjisu2.jpg',
+                ];
+                function getImglovelysjisu() {
+                    var img = '<img src="';
+                    var randomIndex = Math.floor(Math.random() * lovelysjisu.length);
+                    img += lovelysjisu[randomIndex];
+                    img += '" alt="Some alt text" style="width:100%;"/>';
+                    return img;
+                }
+                var nayeon = [
+                    'img/similar/nayeon.jpeg',
+                    'img/similar/nayeon.jpg',
+                    'img/similar/nayeon1.jpg',
+                ];
+                function getImgnayeon() {
+                    var img = '<img src="';
+                    var randomIndex = Math.floor(Math.random() * nayeon.length);
+                    img += nayeon[randomIndex];
+                    img += '" alt="Some alt text" style="width:100%;"/>';
+                    return img;
+                }
+                var omygirljiho = [
+                    'img/similar/omygirljiho1.jpg',
+                    'img/similar/omygirljiho.jpg',
+                    'img/similar/omygirljiho2.jpg',
+                ];
+                function getImgomygirljiho() {
+                    var img = '<img src="';
+                    var randomIndex = Math.floor(Math.random() * omygirljiho.length);
+                    img += omygirljiho[randomIndex];
+                    img += '" alt="Some alt text" style="width:100%;"/>';
+                    return img;
+                }
+                var oyuna = [
+                    'img/similar/oyuna.jpg',
+                    'img/similar/oyuna1.jpg',
+                    'img/similar/oyuna2.jpg',
+                ];
+                function getImgoyuna() {
+                    var img = '<img src="';
+                    var randomIndex = Math.floor(Math.random() * oyuna.length);
+                    img += oyuna[randomIndex];
+                    img += '" alt="Some alt text" style="width:100%;"/>';
+                    return img;
+                }
+                var oyunseo = [
+                    'img/similar/oyunseo.jpg',
+                    'img/similar/oyunseo1.jpg',
+                    'img/similar/oyunseo2.jpg',
+                ];
+                function getImgoyunseo() {
+                    var img = '<img src="';
+                    var randomIndex = Math.floor(Math.random() * oyunseo.length);
+                    img += oyunseo[randomIndex];
+                    img += '" alt="Some alt text" style="width:100%;"/>';
+                    return img;
+                }
+                var parkboyoung = [
+                    'img/similar/parkboyoung.jpg',
+                    'img/similar/parkboyoung1.jpg',
+                    'img/similar/parkboyoung2.jpg',
+                ];
+                function getImgparkboyoung() {
+                    var img = '<img src="';
+                    var randomIndex = Math.floor(Math.random() * parkboyoung.length);
+                    img += parkboyoung[randomIndex];
+                    img += '" alt="Some alt text" style="width:100%;"/>';
+                    return img;
+                }
+                var parkhanbyeol = [
+                    'img/similar/parkhanbyeol.jpg',
+                    'img/similar/parkhanbyeol1.jpg',
+                    'img/similar/parkhanbyeol2.jpg',
+                ];
+                function getImgparkhanbyeol() {
+                    var img = '<img src="';
+                    var randomIndex = Math.floor(Math.random() * parkhanbyeol.length);
+                    img += parkhanbyeol[randomIndex];
+                    img += '" alt="Some alt text" style="width:100%;"/>';
+                    return img;
+                }
+                var parksujin = [
+                    'img/similar/parksujin.jpg',
+                    'img/similar/parksujin1.jpg',
+                    'img/similar/parksujin2.jpg',
+                ];
+                function getImgparksujin() {
+                    var img = '<img src="';
+                    var randomIndex = Math.floor(Math.random() * parksujin.length);
+                    img += parksujin[randomIndex];
+                    img += '" alt="Some alt text" style="width:100%;"/>';
+                    return img;
+                }
+                var parksinhye = [
+                    'img/similar/parksinhye.jpg',
+                    'img/similar/parksinhye1.jpg',
+                    'img/similar/parksinhye2.jpg',
+                ];
+                function getImgparksinhye() {
+                    var img = '<img src="';
+                    var randomIndex = Math.floor(Math.random() * parksinhye.length);
+                    img += parksinhye[randomIndex];
+                    img += '" alt="Some alt text" style="width:100%;"/>';
+                    return img;
+                }
+                var iu = [
+                    'img/similar/iu2.jpg',
+                    'img/similar/iu3.jpg',
+                    'img/similar/iu4.jpg',
+                ];
+                function getImgiu() {
+                    var img = '<img src="';
+                    var randomIndex = Math.floor(Math.random() * iu.length);
+                    img += iu[randomIndex];
+                    img += '" alt="Some alt text" style="width:100%;"/>';
+                    return img;
+                }
+                var redvelvetseulki = [
+                    'img/similar/redvelvetseulki.jpg',
+                    'img/similar/redvelvetseulki1.jpg',
+                    'img/similar/redvelvetseulki2.jpg',
+                ];
+                function getImgredvelvetseulki() {
+                    var img = '<img src="';
+                    var randomIndex = Math.floor(Math.random() * redvelvetseulki.length);
+                    img += redvelvetseulki[randomIndex];
+                    img += '" alt="Some alt text" style="width:100%;"/>';
+                    return img;
+                }
+                var sana = [
+                    'img/similar/sana.jpg',
+                    'img/similar/sana1.jpg',
+                    'img/similar/sana2.jpg',
+                ];
+                function getImgsana() {
+                    var img = '<img src="';
+                    var randomIndex = Math.floor(Math.random() * sana.length);
+                    img += sana[randomIndex];
+                    img += '" alt="Some alt text" style="width:100%;"/>';
+                    return img;
+                }
+                var seohyunjin = [
+                    'img/similar/seohyunjin.jpg',
+                    'img/similar/seohyunjin1.jpg',
+                    'img/similar/seohyunjin2.jpg',
+                ];
+                function getImgseohyunjin() {
+                    var img = '<img src="';
+                    var randomIndex = Math.floor(Math.random() * seohyunjin.length);
+                    img += seohyunjin[randomIndex];
+                    img += '" alt="Some alt text" style="width:100%;"/>';
+                    return img;
+                }
+                var sinmina = [
+                    'img/similar/sinmina.jpg',
+                    'img/similar/sinmina1.jpg',
+                    'img/similar/sinmina2.jpg',
+                ];
+                function getImgsinmina() {
+                    var img = '<img src="';
+                    var randomIndex = Math.floor(Math.random() * sinmina.length);
+                    img += sinmina[randomIndex];
+                    img += '" alt="Some alt text" style="width:100%;"/>';
+                    return img;
+                }
+                var sonnaeun = [
+                    'img/similar/sonnaeun.jpg',
+                    'img/similar/sonnaeun1.jpg',
+                    'img/similar/sonnaeun2.jpg',
+                ];
+                function getImgsonnaeun() {
+                    var img = '<img src="';
+                    var randomIndex = Math.floor(Math.random() * sonnaeun.length);
+                    img += sonnaeun[randomIndex];
+                    img += '" alt="Some alt text" style="width:100%;"/>';
+                    return img;
+                }
+                var sonyejin = [
+                    'img/similar/sonyejin.jpg',
+                    'img/similar/sonyejin1.jpg',
+                    'img/similar/sonyejin2.jpg',
+                ];
+                function getImgsonyejin() {
+                    var img = '<img src="';
+                    var randomIndex = Math.floor(Math.random() * sonyejin.length);
+                    img += sonyejin[randomIndex];
+                    img += '" alt="Some alt text" style="width:100%;"/>';
+                    return img;
+                }
+                var suzy = [
+                    'img/similar/suzy.png',
+                    'img/similar/suzy1.jpg',
+                    'img/similar/suzy2.jpg',
+                ];
+                function getImgsuzy() {
+                    var img = '<img src="';
+                    var randomIndex = Math.floor(Math.random() * suzy.length);
+                    img += suzy[randomIndex];
+                    img += '" alt="Some alt text" style="width:100%;"/>';
+                    return img;
+                }
+                var twicemina = [
+                    'img/similar/twicemina.jpg',
+                    'img/similar/twicemina1.jpg',
+                    'img/similar/twicemina2.jpg',
+                ];
+                function getImgtwicemina() {
+                    var img = '<img src="';
+                    var randomIndex = Math.floor(Math.random() * twicemina.length);
+                    img += twicemina[randomIndex];
+                    img += '" alt="Some alt text" style="width:100%;"/>';
+                    return img;
+                }
+                var tzuy = [
+                    'img/similar/tzuy.jpg',
+                    'img/similar/tzuy1.jpg',
+                    'img/similar/tzuy2.jpg',
+                ];
+                function getImgtzuy() {
+                    var img = '<img src="';
+                    var randomIndex = Math.floor(Math.random() * tzuy.length);
+                    img += tzuy[randomIndex];
+                    img += '" alt="Some alt text" style="width:100%;"/>';
+                    return img;
+                }
+                var yuinna = [
+                    'img/similar/yuinna.png',
+                    'img/similar/yuinna1.jpg',
+                    'img/similar/yuinna2.jpg',
+                ];
+                function getImgyuinna() {
+                    var img = '<img src="';
+                    var randomIndex = Math.floor(Math.random() * yuinna.length);
+                    img += yuinna[randomIndex];
+                    img += '" alt="Some alt text" style="width:100%;"/>';
+                    return img;
+                }
+                var yoona = [
+                    'img/similar/yoona.jpg',
+                    'img/similar/yoona1.jpg',
+                    'img/similar/yoona2.jpg',
+                ];
+                function getImgyoona() {
+                    var img = '<img src="';
+                    var randomIndex = Math.floor(Math.random() * yoona.length);
+                    img += yoona[randomIndex];
+                    img += '" alt="Some alt text" style="width:100%;"/>';
+                    return img;
+                }
+                var yui = [
+                    'img/similar/yui.jpg',
+                    'img/similar/yui1.jpg',
+                    'img/similar/yui2.jpg',
+                ];
+                function getImgyui() {
+                    var img = '<img src="';
+                    var randomIndex = Math.floor(Math.random() * yui.length);
+                    img += yui[randomIndex];
+                    img += '" alt="Some alt text" style="width:100%;"/>';
+                    return img;
+                }
+                
+                var imgahnsohee = getImgAhnsohee();
+                var imgbaekjinhee = getImgBaekjinhee();
+                var imgblackpinkjisu = getImgBlackpinkjisu();
+                var imgchaesubin = getImgChaesubin();
+                var imgcheonuhee = getImgcheonuhee();
+                var imgdahyun = getImgdahyun();
+                var imggoara = getImggoara();
+                var imggosunghee = getImggosunghee();
+                var imggouri = getImggouri();
+                var imggugudanmina = getImggugudanmina();
+                var imgguhyesun = getImgguhyesun();
+                var imghanchaea = getImghanchaea();
+                var imghangain = getImghangain();
+                var imghanhyoju = getImghanhyoju();
+                var imghanjimin = getImghanjimin();
+                var imghanyeseul = getImghanyeseul();
+                var imghyeri = getImghyeri();
+                var imgimsuhyang = getImgimsuhyang();
+                var imgirin = getImgirin();
+                var imgjangnara = getImgjangnara();
+                var imgjangwonyoung = getImgjangwonyoung();
+                var imgjenny = getImgjenny();
+                var imgjeongchaeyeon = getImgjeongchaeyeon();
+                var imgjeongsomin = getImgjeongsomin();
+                var imgjeonjihyun = getImgjeonjihyun();
+                var imgjeonsomin = getImgjeonsomin();
+                var imgjinseyeon = getImgjinseyeon();
+                var imgchoboa = getImgchoboa();
+                var imgkanghanna = getImgkanghanna();
+                var imgkanghyejeong = getImgkanghyejeong();
+                var imgkangminkyoung = getImgkangminkyoung();
+                var imgkimheesun = getImgkimheesun();
+                var imgkimminjung = getImgkimminjung();
+                var imgkimsarang = getImgkimsarang();
+                var imgkimsejeong = getImgkimsejeong();
+                var imgkimtaehee = getImgkimtaehee();
+                var imgkimtaeri = getImgkimtaeri();
+                var imgkimyujeong = getImgkimyujeong();
+                var imgkyoungri = getImgkyoungri();
+                var imgkyoungsujin = getImgkyoungsujin();
+                var imgidahee = getImgidahee();
+                var imgiminjeong = getImgiminjeong();
+                var imginayeong = getImginayeong();
+                var imgisiyeong = getImgisiyeong();
+                var imgiseongkyiung = getImgiseongkyiung();
+                var imgiseyoung = getImgiseyoung();
+                var imgiyeonhee = getImgiyeonhee();
+                var imglovelysjisu = getImglovelysjisu();
+                var imgnayeon = getImgnayeon();
+                var imgomygirljiho = getImgomygirljiho();
+                var imgoyuna = getImgoyuna();
+                var imgoyunseo = getImgoyunseo();
+                var imgparkboyoung = getImgparkboyoung();
+                var imgparkhanbyeol = getImgparkhanbyeol();
+                var imgparksinhye = getImgparksinhye();
+                var imgparksujin = getImgparksujin();
+                var imgiu = getImgiu();
+                var imgredvelvetseulki = getImgredvelvetseulki();
+                var imgsana = getImgsana();
+                var imgseohyunjin = getImgseohyunjin();
+                var imgsinmina = getImgsinmina();
+                var imgsonnaeun = getImgsonnaeun();
+                var imgsonyejin = getImgsonyejin();
+                var imgsuzy = getImgsuzy();
+                var imgtwicemina = getImgtwicemina();
+                var imgtzuy = getImgtzuy();
+                var imgyuinna = getImgyuinna();
+                var imgyoona = getImgyoona();
+                var imgyui = getImgyui();
+                
+                
+                switch (prediction[0].className) {
+                    case "ahn-so-hee" :
+                        resultMessege = "안소희";
+                        resultImage = imgahnsohee;
+                        break;
+                    case "baek-jin-hee" :
+                        resultMessege = "백진희";
+                        resultImage = imgbaekjinhee;
+                        break;
+                    case "blackpink-jisu" :
+                        resultMessege = "블랙핑크 지수";
+                        resultImage = imgblackpinkjisu;
+                        break;
+                    case "chae-su-bin" :
+                        resultMessege = "채수빈";
+                        resultImage = imgchaesubin;
+                        break;
+                    case "cheon-woo-hee" :
+                        resultMessege = "천우희";
+                        resultImage = imgcheonuhee;
+                        break;
+                    case "da-hyun" :
+                        resultMessege = "트와이스 다현";
+                        resultImage = imgdahyun;
+                        break;
+                    case "go-a-ra" :
+                        resultMessege = "고아라";
+                        resultImage = imggoara;
+                        break;
+                    case "go-sung-hee" :
+                        resultMessege = "고성희";
+                        resultImage = imggosunghee;
+                        break;
+                    case "go-woo-ri" :
+                        resultMessege = "고우리";
+                        resultImage = imggouri;
+                        break;
+                    case "gugudan-mina" :
+                        resultMessege = "구구단 미나";
+                        resultImage = imggugudanmina;
+                        break;
+                    case "gu-hye-seon" :
+                        resultMessege = "구혜선";
+                        resultImage = imgguhyesun;
+                        break;
+                    case "han-chae-a" :
+                        resultMessege = "한채아";
+                        resultImage = imghanchaea;
+                        break;
+                    case "han-ga-in" :
+                        resultMessege = "한가인";
+                        resultImage = imghangain;
+                        break;
+                    case "han-hyo-ju" :
+                        resultMessege = "한효주";
+                        resultImage = imghanhyoju;
+                        break;
+                    case "han-ji-min" :
+                        resultMessege = "한지민";
+                        resultImage = imghanjimin;
+                        break;
+                    case "han-ye-seul" :
+                        resultMessege = "한예슬";
+                        resultImage = imghanyeseul;
+                        break;
+                    case "hye-ri" :
+                        resultMessege = "혜리";
+                        resultImage = imghyeri;
+                        break;
+                    case "im-su-hyang" :
+                        resultMessege = "임수향";
+                        resultImage = imgimsuhyang;
+                        break;
+                    case "irine" :
+                        resultMessege = "아이린";
+                        resultImage = imgirin;
+                        break;
+                    case "jang-na-ra" :
+                        resultMessege = "장나라";
+                        resultImage = imgjangnara;
+                        break;
+                    case "jang-won-young" :
+                        resultMessege = "장원영";
+                        resultImage = imgjangwonyoung;
+                        break;
+                    case "jenny" :
+                        resultMessege = "블랙핑크 제니";
+                        resultImage = imgjenny;
+                        break;
+                    case "jeong-chae-youn" :
+                        resultMessege = "정채연";
+                        resultImage = imgjeongchaeyeon;
+                        break;
+                    case "jeong-so-min" :
+                        resultMessege = "정소민";
+                        resultImage = imgjeongsomin;
+                        break;
+                    case "jeon-ji-hyun" :
+                        resultMessege = "전지현";
+                        resultImage = imgjeonjihyun;
+                        break;
+                    case "jeon-so-min" :
+                        resultMessege = "전소민";
+                        resultImage = imgjeonsomin;
+                        break;
+                    case "jin-se-yeon" :
+                        resultMessege = "진세연";
+                        resultImage = imgjinseyeon;
+                        break;
+                    case "jo-bo-a" :
+                        resultMessege = "조보아";
+                        resultImage = imgchoboa;
+                        break;
+                    case "kang-han-na" :
+                        resultMessege = "강한나";
+                        resultImage = imgkanghanna;
+                        break;
+                    case "kang-hye-jeong" :
+                        resultMessege = "강혜정";
+                        resultImage = imgkanghyejeong;
+                        break;
+                    case "kang-min-kyoung" :
+                        resultMessege = "강민경";
+                        resultImage = imgkangminkyoung;
+                        break;
+                    case "kim-hee-seon" :
+                        resultMessege = "김희선";
+                        resultImage = imgkimheesun;
+                        break;
+                    case "kim-min-jeong" :
+                        resultMessege = "김민정";
+                        resultImage = imgkimminjung;
+                        break;
+                    case "kim-sa-rang" :
+                        resultMessege = "김사랑";
+                        resultImage = imgkimsarang;
+                        break;
+                    case "kim-se-jeong" :
+                        resultMessege = "김세정";
+                        resultImage = imgkimsejeong;
+                        break;  
+                    case "kim-tae-hee" :
+                        resultMessege = "김태희";
+                        resultImage = imgkimtaehee;
+                        break;
+                    case "kim-tae-ri" :
+                        resultMessege = "김태리";
+                        resultImage = imgkimtaeri;
+                        break;
+                    case "kim-yoo-jeong" :
+                        resultMessege = "김유정";
+                        resultImage = imgkimyujeong;
+                        break;
+                    case "kyoung-ri" :
+                        resultMessege = "경리";
+                        resultImage = imgkyoungri;
+                        break;
+                    case "kyoung-soo-jin" :
+                        resultMessege = "경수진";
+                        resultImage = imgkyoungsujin;
+                        break;
+                    case "lee-da-hee" :
+                        resultMessege = "이다희";
+                        resultImage = imgidahee;
+                        break;
+                    case "lee-min-jeong" :
+                        resultMessege = "이민정";
+                        resultImage = imgiminjeong;
+                        break;
+                    case "lee-na-young" :
+                        resultMessege = "이나영";
+                        resultImage = imginayeong;
+                        break;
+                    case "lee-see-young" :
+                        resultMessege = "이시영";
+                        resultImage = imgisiyeong;
+                        break;
+                    case "lee-seong-kyoung" :
+                        resultMessege = "이성경";
+                        resultImage = imgiseongkyiung;
+                        break;
+                    case "lee-se-young" :
+                        resultMessege = "이세영";
+                        resultImage = imgiseyoung;
+                        break;
+                    case "lee-youn-hee" :
+                        resultMessege = "이연희";
+                        resultImage = imgiyeonhee;
+                        break;
+                    case "lovelys-jisu" :
+                        resultMessege = "러블리즈 지수";
+                        resultImage = imglovelysjisu;
+                        break;
+                    case "na-yeon" :
+                        resultMessege = "트와이스 나연";
+                        resultImage = imgnayeon;
+                        break;
+                    case "omygirl-jiho" :
+                        resultMessege = "오마이걸 지호";
+                        resultImage = imgomygirljiho;
+                        break;
+                    case "o-yoon-a" :
+                        resultMessege = "오윤아";
+                        resultImage = imgoyuna;
+                        break;
+                    case "o-youn-seo" :
+                        resultMessege = "오연서";
+                        resultImage = imgoyunseo;
+                        break;
+                    case "park-bo-young" :
+                        resultMessege = "박보영";
+                        resultImage = imgparkboyoung;
+                        break;
+                    case "park-han-byul" :
+                        resultMessege = "박한별";
+                        resultImage = imgparkhanbyeol;
+                        break;
+                    case "park-sin-hye" :
+                        resultMessege = "박신혜";
+                        resultImage = imgparksinhye;
+                        break;
+                    case "puppy-iu" :
+                        resultMessege = "아이유";
+                        resultImage = imgiu;
+                        break;
+                    case "redvelvet-seulki" :
+                        resultMessege = "레드벨벳 슬기";
+                        resultImage = imgredvelvetseulki;
+                        break;
+                    case "park-su-jin" :
+                        resultMessege = "박수진";
+                        resultImage = imgparksujin;
+                        break;
+                    case "seo-hyun-jin" :
+                        resultMessege = "서현진";
+                        resultImage = imgseohyunjin;
+                        break;
+                    case "sin-min-a" :
+                        resultMessege = "신민아";
+                        resultImage = imgsinmina;
+                        break;
+                    case "sana" :
+                        resultMessege = "트와이스 사나";
+                        resultImage = imgsana;
+                        break;
+                    case "son-na-eun" :
+                        resultMessege = "손나은";
+                        resultImage = imgsonnaeun;
+                        break;
+                    case "son-ye-jin" :
+                        resultMessege = "손예진";
+                        resultImage = imgsonyejin;
+                        break;
+                    case "twice-mina" :
+                        resultMessege = "트와이스 미나";
+                        resultImage = imgtwicemina;
+                        break;
+                    case "yoo-in-na" :
+                        resultMessege = "유인나";
+                        resultImage = imgyuinna;
+                        break;
+                    case "yoon-a" :
+                        resultMessege = "소녀시대 윤아";
+                        resultImage = imgyoona;
+                        break;
+                    case "suzy" :
+                        resultMessege = "수지";
+                        resultImage = imgsuzy;
+                        break;
+                    case "tzuy" :
+                        resultMessege = "트와이스 쯔위";
+                        resultImage = imgtzuy;
+                        break;
+                    case "yui" :
+                        resultMessege = "유이";
+                        resultImage = imgyui;
+                        break;   
+                    default:
+                        resultMessege = "알수없음";
+                }
+                $('.result-messege').html(resultMessege);
+                $('.result-image').html(resultImage);
+            }
+        </script>
+    </body>
+</html>
