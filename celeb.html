@@ -58,10 +58,11 @@
                     </div>
                     <p class="text-center">AI가 당신의 닮은꼴을 분석중입니다.</p>
                 </div>
-                <div class="result-messege"></div>
+                
                 <div class="result-descr"></div>
                 <div class="result-celeb"></div>
                 <div class="result-image"></div>
+                <div class="result-messege"></div>
                 <div id="label-container"></div>
                 <div class="image-title-wrap">
                     <button type="button" onclick="window.location.reload();" class="remove-image">
@@ -112,7 +113,7 @@
             // https://github.com/googlecreativelab/teachablemachine-community/tree/master/libraries/image
 
             // the link to your model provided by Teachable Machine export panel
-            const URL = 'https://teachablemachine.withgoogle.com/models/ZXZ7xSsYE/';
+            const URL = 'https://teachablemachine.withgoogle.com/models/h0bAWxMXI/';
 
             let model, labelContainer, maxPredictions;
 
@@ -144,6 +145,7 @@
                 console.log(prediction[0].className);
                 var resultMessege;
                 var resultImage;
+                var resultDescr;
                 
                 var ahnsohee = [
                     'img/similar/sohee.jpg',
@@ -204,15 +206,15 @@
                     img += '" alt="Some alt text" style="width:100%;"/>';
                     return img;
                 }
-                 var dahyun = [
-                    'img/similar/dahyun.jpg',
-                    'img/similar/dahyun1.jpg',
-                    'img/similar/dahyun2.jpg',
+                 var baeyunkyoung = [
+                    'img/similar/baeyunkyoung.jpg',
+                    'img/similar/baeyunkyoung1.jpg',
+                    'img/similar/baeyunkyoung2.jpg',
                 ];
-                function getImgdahyun() {
+                function getImgbaeyunkyoung() {
                     var img = '<img src="';
-                    var randomIndex = Math.floor(Math.random() * dahyun.length);
-                    img += dahyun[randomIndex];
+                    var randomIndex = Math.floor(Math.random() * baeyunkyoung.length);
+                    img += baeyunkyoung[randomIndex];
                     img += '" alt="Some alt text" style="width:100%;"/>';
                     return img;
                 }
@@ -249,18 +251,6 @@
                     var img = '<img src="';
                     var randomIndex = Math.floor(Math.random() * gouri.length);
                     img += gouri[randomIndex];
-                    img += '" alt="Some alt text" style="width:100%;"/>';
-                    return img;
-                }
-                var gugudanmina = [
-                    'img/similar/gugudanmina1.jpg',
-                    'img/similar/gugudanmina2.jpg',
-                    'img/similar/gugudanmina.png',
-                ];
-                function getImggugudanmina() {
-                    var img = '<img src="';
-                    var randomIndex = Math.floor(Math.random() * gugudanmina.length);
-                    img += gugudanmina[randomIndex];
                     img += '" alt="Some alt text" style="width:100%;"/>';
                     return img;
                 }
@@ -408,18 +398,6 @@
                     img += '" alt="Some alt text" style="width:100%;"/>';
                     return img;
                 }
-                var jeongchaeyeon = [
-                    'img/similar/jeongchaeyeon.jpg',
-                    'img/similar/jeongchaeyeon1.jpg',
-                    'img/similar/jeongchaeyeon2.jpg',
-                ];
-                function getImgjeongchaeyeon() {
-                    var img = '<img src="';
-                    var randomIndex = Math.floor(Math.random() * jeongchaeyeon.length);
-                    img += jeongchaeyeon[randomIndex];
-                    img += '" alt="Some alt text" style="width:100%;"/>';
-                    return img;
-                }
                 var jeongsomin = [
                     'img/similar/jeongsomin.jpg',
                     'img/similar/jeongsomin1.jpg',
@@ -441,18 +419,6 @@
                     var img = '<img src="';
                     var randomIndex = Math.floor(Math.random() * jeonjihyun.length);
                     img += jeonjihyun[randomIndex];
-                    img += '" alt="Some alt text" style="width:100%;"/>';
-                    return img;
-                }
-                var jeonsomin = [
-                    'img/similar/jeonsomin.jpg',
-                    'img/similar/jeonsomin1.jpg',
-                    'img/similar/jeonsomin2.jpg',
-                ];
-                function getImgjeonsomin() {
-                    var img = '<img src="';
-                    var randomIndex = Math.floor(Math.random() * jeonsomin.length);
-                    img += jeonsomin[randomIndex];
                     img += '" alt="Some alt text" style="width:100%;"/>';
                     return img;
                 }
@@ -480,16 +446,6 @@
                     img += '" alt="Some alt text" style="width:100%;"/>';
                     return img;
                 }
-                var kanghyejeong = [
-                    'img/similar/kanghyejeong.jpg',
-                ];
-                function getImgkanghyejeong() {
-                    var img = '<img src="';
-                    var randomIndex = Math.floor(Math.random() * kanghyejeong.length);
-                    img += kanghyejeong[randomIndex];
-                    img += '" alt="Some alt text" style="width:100%;"/>';
-                    return img;
-                }
                 var kanghanna = [
                     'img/similar/kanghanna.jpg',
                     'img/similar/kanghanna1.jpg',
@@ -511,18 +467,6 @@
                     var img = '<img src="';
                     var randomIndex = Math.floor(Math.random() * kangminkyoung.length);
                     img += kangminkyoung[randomIndex];
-                    img += '" alt="Some alt text" style="width:100%;"/>';
-                    return img;
-                }
-                var kimheesun = [
-                    'img/similar/kimheesun.jpg',
-                    'img/similar/kimheesun1.jpg',
-                    'img/similar/kimheesun2.jpg',
-                ];
-                function getImgkimheesun() {
-                    var img = '<img src="';
-                    var randomIndex = Math.floor(Math.random() * kimheesun.length);
-                    img += kimheesun[randomIndex];
                     img += '" alt="Some alt text" style="width:100%;"/>';
                     return img;
                 }
@@ -571,18 +515,6 @@
                     var img = '<img src="';
                     var randomIndex = Math.floor(Math.random() * kimtaehee.length);
                     img += kimtaehee[randomIndex];
-                    img += '" alt="Some alt text" style="width:100%;"/>';
-                    return img;
-                }
-                var kimtaeri = [
-                    'img/similar/kimtaeri.jpg',
-                    'img/similar/kimtaeri1.jpg',
-                    'img/similar/kimtaeri2.jpg',
-                ];
-                function getImgkimtaeri() {
-                    var img = '<img src="';
-                    var randomIndex = Math.floor(Math.random() * kimtaeri.length);
-                    img += kimtaeri[randomIndex];
                     img += '" alt="Some alt text" style="width:100%;"/>';
                     return img;
                 }
@@ -643,30 +575,6 @@
                     var img = '<img src="';
                     var randomIndex = Math.floor(Math.random() * iminjeong.length);
                     img += iminjeong[randomIndex];
-                    img += '" alt="Some alt text" style="width:100%;"/>';
-                    return img;
-                }
-                var inayeong = [
-                    'img/similar/inayeong.jpg',
-                    'img/similar/inayeong2.jpg',
-                    'img/similar/inayeong1.jpg',
-                ];
-                function getImginayeong() {
-                    var img = '<img src="';
-                    var randomIndex = Math.floor(Math.random() * inayeong.length);
-                    img += inayeong[randomIndex];
-                    img += '" alt="Some alt text" style="width:100%;"/>';
-                    return img;
-                }
-                var isiyeong = [
-                    'img/similar/isiyeong.jpg',
-                    'img/similar/isiyeong1.jpg',
-                    'img/similar/isiyeong2.jpg',
-                ];
-                function getImgisiyeong() {
-                    var img = '<img src="';
-                    var randomIndex = Math.floor(Math.random() * isiyeong.length);
-                    img += isiyeong[randomIndex];
                     img += '" alt="Some alt text" style="width:100%;"/>';
                     return img;
                 }
@@ -742,18 +650,6 @@
                     img += '" alt="Some alt text" style="width:100%;"/>';
                     return img;
                 }
-                var oyuna = [
-                    'img/similar/oyuna.jpg',
-                    'img/similar/oyuna1.jpg',
-                    'img/similar/oyuna2.jpg',
-                ];
-                function getImgoyuna() {
-                    var img = '<img src="';
-                    var randomIndex = Math.floor(Math.random() * oyuna.length);
-                    img += oyuna[randomIndex];
-                    img += '" alt="Some alt text" style="width:100%;"/>';
-                    return img;
-                }
                 var oyunseo = [
                     'img/similar/oyunseo.jpg',
                     'img/similar/oyunseo1.jpg',
@@ -826,15 +722,15 @@
                     img += '" alt="Some alt text" style="width:100%;"/>';
                     return img;
                 }
-                var redvelvetseulki = [
-                    'img/similar/redvelvetseulki.jpg',
-                    'img/similar/redvelvetseulki1.jpg',
-                    'img/similar/redvelvetseulki2.jpg',
+                var redvelvetjoy = [
+                    'img/similar/redvelvetjoy.jpg',
+                    'img/similar/redvelvetjoy1.jpg',
+                    'img/similar/redvelvetjoy2.jpg',
                 ];
-                function getImgredvelvetseulki() {
+                function getImgredvelvetjoy() {
                     var img = '<img src="';
-                    var randomIndex = Math.floor(Math.random() * redvelvetseulki.length);
-                    img += redvelvetseulki[randomIndex];
+                    var randomIndex = Math.floor(Math.random() * redvelvetjoy.length);
+                    img += redvelvetjoy[randomIndex];
                     img += '" alt="Some alt text" style="width:100%;"/>';
                     return img;
                 }
@@ -970,17 +866,64 @@
                     img += '" alt="Some alt text" style="width:100%;"/>';
                     return img;
                 }
+                var songhyekyo = [
+                    'img/similar/songhyekyo.jpg',
+                    'img/similar/songhyekyo1.jpg',
+                    'img/similar/songhyekyo2.jpg',
+                ];
+                function getImgsonghyekyo() {
+                    var img = '<img src="';
+                    var randomIndex = Math.floor(Math.random() * songhyekyo.length);
+                    img += songhyekyo[randomIndex];
+                    img += '" alt="Some alt text" style="width:100%;"/>';
+                    return img;
+                }
+                var sulhyun = [
+                    'img/similar/sulhyun.jpg',
+                    'img/similar/sulhyun1.jpg',
+                    'img/similar/sulhyun2.jpg',
+                ];
+                function getImgsulhyun() {
+                    var img = '<img src="';
+                    var randomIndex = Math.floor(Math.random() * sulhyun.length);
+                    img += sulhyun[randomIndex];
+                    img += '" alt="Some alt text" style="width:100%;"/>';
+                    return img;
+                }
+                var kanghyewon = [
+                    'img/similar/kanghyewon.jpg',
+                    'img/similar/kanghyewon1.jpg',
+                    'img/similar/kanghyewon2.png',
+                ];
+                function getImgkanghyewon() {
+                    var img = '<img src="';
+                    var randomIndex = Math.floor(Math.random() * kanghyewon.length);
+                    img += kanghyewon[randomIndex];
+                    img += '" alt="Some alt text" style="width:100%;"/>';
+                    return img;
+                }
+                var omygirlarin = [
+                    'img/similar/omygirlarin.png',
+                    'img/similar/omygirlarin1.jpg',
+                    'img/similar/omygirlarin2.jpg',
+                ];
+                function getImgomygirlarin() {
+                    var img = '<img src="';
+                    var randomIndex = Math.floor(Math.random() * omygirlarin.length);
+                    img += omygirlarin[randomIndex];
+                    img += '" alt="Some alt text" style="width:100%;"/>';
+                    return img;
+                }
                 
                 var imgahnsohee = getImgAhnsohee();
                 var imgbaekjinhee = getImgBaekjinhee();
                 var imgblackpinkjisu = getImgBlackpinkjisu();
                 var imgchaesubin = getImgChaesubin();
                 var imgcheonuhee = getImgcheonuhee();
-                var imgdahyun = getImgdahyun();
+                var imgbaeyunkyoung = getImgbaeyunkyoung();
                 var imggoara = getImggoara();
                 var imggosunghee = getImggosunghee();
                 var imggouri = getImggouri();
-                var imggugudanmina = getImggugudanmina();
                 var imgguhyesun = getImgguhyesun();
                 var imghanchaea = getImghanchaea();
                 var imghangain = getImghangain();
@@ -993,42 +936,34 @@
                 var imgjangnara = getImgjangnara();
                 var imgjangwonyoung = getImgjangwonyoung();
                 var imgjenny = getImgjenny();
-                var imgjeongchaeyeon = getImgjeongchaeyeon();
                 var imgjeongsomin = getImgjeongsomin();
                 var imgjeonjihyun = getImgjeonjihyun();
-                var imgjeonsomin = getImgjeonsomin();
                 var imgjinseyeon = getImgjinseyeon();
                 var imgchoboa = getImgchoboa();
                 var imgkanghanna = getImgkanghanna();
-                var imgkanghyejeong = getImgkanghyejeong();
                 var imgkangminkyoung = getImgkangminkyoung();
-                var imgkimheesun = getImgkimheesun();
                 var imgkimminjung = getImgkimminjung();
                 var imgkimsarang = getImgkimsarang();
                 var imgkimsejeong = getImgkimsejeong();
                 var imgkimtaehee = getImgkimtaehee();
-                var imgkimtaeri = getImgkimtaeri();
                 var imgkimyujeong = getImgkimyujeong();
                 var imgkyoungri = getImgkyoungri();
                 var imgkyoungsujin = getImgkyoungsujin();
                 var imgidahee = getImgidahee();
                 var imgiminjeong = getImgiminjeong();
-                var imginayeong = getImginayeong();
-                var imgisiyeong = getImgisiyeong();
                 var imgiseongkyiung = getImgiseongkyiung();
                 var imgiseyoung = getImgiseyoung();
                 var imgiyeonhee = getImgiyeonhee();
                 var imglovelysjisu = getImglovelysjisu();
                 var imgnayeon = getImgnayeon();
                 var imgomygirljiho = getImgomygirljiho();
-                var imgoyuna = getImgoyuna();
                 var imgoyunseo = getImgoyunseo();
                 var imgparkboyoung = getImgparkboyoung();
                 var imgparkhanbyeol = getImgparkhanbyeol();
                 var imgparksinhye = getImgparksinhye();
                 var imgparksujin = getImgparksujin();
                 var imgiu = getImgiu();
-                var imgredvelvetseulki = getImgredvelvetseulki();
+                var imgredvelvetjoy = getImgredvelvetjoy();
                 var imgsana = getImgsana();
                 var imgseohyunjin = getImgseohyunjin();
                 var imgsinmina = getImgsinmina();
@@ -1040,290 +975,333 @@
                 var imgyuinna = getImgyuinna();
                 var imgyoona = getImgyoona();
                 var imgyui = getImgyui();
-                
+                var imgsonghyekyo = getImgsonghyekyo();
+                var imgsulhyun = getImgsulhyun();
+                var imgkanghyewon = getImgkanghyewon();
+                var imgomygirlarin = getImgomygirlarin();
                 
                 switch (prediction[0].className) {
                     case "ahn-so-hee" :
                         resultMessege = "안소희";
                         resultImage = imgahnsohee;
+                        resultDescr = '당신이 닮은 연예인은 바로!';
                         break;
                     case "baek-jin-hee" :
                         resultMessege = "백진희";
                         resultImage = imgbaekjinhee;
+                        resultDescr = '당신이 닮은 연예인은 바로!';
                         break;
                     case "blackpink-jisu" :
                         resultMessege = "블랙핑크 지수";
                         resultImage = imgblackpinkjisu;
+                        resultDescr = '당신이 닮은 연예인은 바로!';
                         break;
                     case "chae-su-bin" :
                         resultMessege = "채수빈";
                         resultImage = imgchaesubin;
+                        resultDescr = '당신이 닮은 연예인은 바로!';
                         break;
                     case "cheon-woo-hee" :
                         resultMessege = "천우희";
                         resultImage = imgcheonuhee;
+                        resultDescr = '당신이 닮은 연예인은 바로!';
                         break;
-                    case "da-hyun" :
-                        resultMessege = "트와이스 다현";
-                        resultImage = imgdahyun;
+                    case "baeyunkyoung" :
+                        resultMessege = "배윤경";
+                        resultImage = imgbaeyunkyoung;
+                        resultDescr = '당신이 닮은 연예인은 바로!';
                         break;
                     case "go-a-ra" :
                         resultMessege = "고아라";
                         resultImage = imggoara;
+                        resultDescr = '당신이 닮은 연예인은 바로!';
                         break;
                     case "go-sung-hee" :
                         resultMessege = "고성희";
                         resultImage = imggosunghee;
+                        resultDescr = '당신이 닮은 연예인은 바로!';
                         break;
                     case "go-woo-ri" :
                         resultMessege = "고우리";
                         resultImage = imggouri;
-                        break;
-                    case "gugudan-mina" :
-                        resultMessege = "구구단 미나";
-                        resultImage = imggugudanmina;
+                        resultDescr = '당신이 닮은 연예인은 바로!';
                         break;
                     case "gu-hye-seon" :
                         resultMessege = "구혜선";
                         resultImage = imgguhyesun;
+                        resultDescr = '당신이 닮은 연예인은 바로!';
                         break;
                     case "han-chae-a" :
                         resultMessege = "한채아";
                         resultImage = imghanchaea;
+                        resultDescr = '당신이 닮은 연예인은 바로!';
                         break;
                     case "han-ga-in" :
                         resultMessege = "한가인";
                         resultImage = imghangain;
+                        resultDescr = '당신이 닮은 연예인은 바로!';
                         break;
                     case "han-hyo-ju" :
                         resultMessege = "한효주";
                         resultImage = imghanhyoju;
+                        resultDescr = '당신이 닮은 연예인은 바로!';
                         break;
                     case "han-ji-min" :
                         resultMessege = "한지민";
                         resultImage = imghanjimin;
+                        resultDescr = '당신이 닮은 연예인은 바로!';
                         break;
                     case "han-ye-seul" :
                         resultMessege = "한예슬";
                         resultImage = imghanyeseul;
+                        resultDescr = '당신이 닮은 연예인은 바로!';
                         break;
                     case "hye-ri" :
                         resultMessege = "혜리";
                         resultImage = imghyeri;
+                        resultDescr = '당신이 닮은 연예인은 바로!';
                         break;
                     case "im-su-hyang" :
                         resultMessege = "임수향";
                         resultImage = imgimsuhyang;
+                        resultDescr = '당신이 닮은 연예인은 바로!';
                         break;
                     case "irine" :
                         resultMessege = "아이린";
                         resultImage = imgirin;
+                        resultDescr = '당신이 닮은 연예인은 바로!';
                         break;
                     case "jang-na-ra" :
                         resultMessege = "장나라";
                         resultImage = imgjangnara;
+                        resultDescr = '당신이 닮은 연예인은 바로!';
                         break;
                     case "jang-won-young" :
                         resultMessege = "장원영";
                         resultImage = imgjangwonyoung;
+                        resultDescr = '당신이 닮은 연예인은 바로!';
                         break;
                     case "jenny" :
                         resultMessege = "블랙핑크 제니";
                         resultImage = imgjenny;
-                        break;
-                    case "jeong-chae-youn" :
-                        resultMessege = "정채연";
-                        resultImage = imgjeongchaeyeon;
+                        resultDescr = '당신이 닮은 연예인은 바로!';
                         break;
                     case "jeong-so-min" :
                         resultMessege = "정소민";
                         resultImage = imgjeongsomin;
+                        resultDescr = '당신이 닮은 연예인은 바로!';
                         break;
                     case "jeon-ji-hyun" :
                         resultMessege = "전지현";
                         resultImage = imgjeonjihyun;
-                        break;
-                    case "jeon-so-min" :
-                        resultMessege = "전소민";
-                        resultImage = imgjeonsomin;
+                        resultDescr = '당신이 닮은 연예인은 바로!';
                         break;
                     case "jin-se-yeon" :
                         resultMessege = "진세연";
                         resultImage = imgjinseyeon;
+                        resultDescr = '당신이 닮은 연예인은 바로!';
                         break;
                     case "jo-bo-a" :
                         resultMessege = "조보아";
                         resultImage = imgchoboa;
+                        resultDescr = '당신이 닮은 연예인은 바로!';
                         break;
                     case "kang-han-na" :
                         resultMessege = "강한나";
                         resultImage = imgkanghanna;
-                        break;
-                    case "kang-hye-jeong" :
-                        resultMessege = "강혜정";
-                        resultImage = imgkanghyejeong;
+                        resultDescr = '당신이 닮은 연예인은 바로!';
                         break;
                     case "kang-min-kyoung" :
                         resultMessege = "강민경";
                         resultImage = imgkangminkyoung;
-                        break;
-                    case "kim-hee-seon" :
-                        resultMessege = "김희선";
-                        resultImage = imgkimheesun;
+                        resultDescr = '당신이 닮은 연예인은 바로!';
                         break;
                     case "kim-min-jeong" :
                         resultMessege = "김민정";
                         resultImage = imgkimminjung;
+                        resultDescr = '당신이 닮은 연예인은 바로!';
                         break;
                     case "kim-sa-rang" :
                         resultMessege = "김사랑";
                         resultImage = imgkimsarang;
+                        resultDescr = '당신이 닮은 연예인은 바로!';
                         break;
                     case "kim-se-jeong" :
                         resultMessege = "김세정";
                         resultImage = imgkimsejeong;
+                        resultDescr = '당신이 닮은 연예인은 바로!';
                         break;  
                     case "kim-tae-hee" :
                         resultMessege = "김태희";
                         resultImage = imgkimtaehee;
-                        break;
-                    case "kim-tae-ri" :
-                        resultMessege = "김태리";
-                        resultImage = imgkimtaeri;
+                        resultDescr = '당신이 닮은 연예인은 바로!';
                         break;
                     case "kim-yoo-jeong" :
                         resultMessege = "김유정";
                         resultImage = imgkimyujeong;
+                        resultDescr = '당신이 닮은 연예인은 바로!';
                         break;
                     case "kyoung-ri" :
                         resultMessege = "경리";
                         resultImage = imgkyoungri;
+                        resultDescr = '당신이 닮은 연예인은 바로!';
                         break;
                     case "kyoung-soo-jin" :
                         resultMessege = "경수진";
                         resultImage = imgkyoungsujin;
+                        resultDescr = '당신이 닮은 연예인은 바로!';
                         break;
                     case "lee-da-hee" :
                         resultMessege = "이다희";
                         resultImage = imgidahee;
+                        resultDescr = '당신이 닮은 연예인은 바로!';
                         break;
                     case "lee-min-jeong" :
                         resultMessege = "이민정";
                         resultImage = imgiminjeong;
-                        break;
-                    case "lee-na-young" :
-                        resultMessege = "이나영";
-                        resultImage = imginayeong;
-                        break;
-                    case "lee-see-young" :
-                        resultMessege = "이시영";
-                        resultImage = imgisiyeong;
+                        resultDescr = '당신이 닮은 연예인은 바로!';
                         break;
                     case "lee-seong-kyoung" :
                         resultMessege = "이성경";
                         resultImage = imgiseongkyiung;
+                        resultDescr = '당신이 닮은 연예인은 바로!';
                         break;
                     case "lee-se-young" :
                         resultMessege = "이세영";
                         resultImage = imgiseyoung;
+                        resultDescr = '당신이 닮은 연예인은 바로!';
                         break;
                     case "lee-youn-hee" :
                         resultMessege = "이연희";
                         resultImage = imgiyeonhee;
+                        resultDescr = '당신이 닮은 연예인은 바로!';
                         break;
                     case "lovelys-jisu" :
                         resultMessege = "러블리즈 지수";
                         resultImage = imglovelysjisu;
+                        resultDescr = '당신이 닮은 연예인은 바로!';
                         break;
                     case "na-yeon" :
                         resultMessege = "트와이스 나연";
                         resultImage = imgnayeon;
+                        resultDescr = '당신이 닮은 연예인은 바로!';
                         break;
                     case "omygirl-jiho" :
                         resultMessege = "오마이걸 지호";
                         resultImage = imgomygirljiho;
-                        break;
-                    case "o-yoon-a" :
-                        resultMessege = "오윤아";
-                        resultImage = imgoyuna;
+                        resultDescr = '당신이 닮은 연예인은 바로!';
                         break;
                     case "o-youn-seo" :
                         resultMessege = "오연서";
                         resultImage = imgoyunseo;
+                        resultDescr = '당신이 닮은 연예인은 바로!';
                         break;
                     case "park-bo-young" :
                         resultMessege = "박보영";
                         resultImage = imgparkboyoung;
+                        resultDescr = '당신이 닮은 연예인은 바로!';
                         break;
                     case "park-han-byul" :
                         resultMessege = "박한별";
                         resultImage = imgparkhanbyeol;
+                        resultDescr = '당신이 닮은 연예인은 바로!';
                         break;
                     case "park-sin-hye" :
                         resultMessege = "박신혜";
                         resultImage = imgparksinhye;
+                        resultDescr = '당신이 닮은 연예인은 바로!';
                         break;
                     case "puppy-iu" :
                         resultMessege = "아이유";
                         resultImage = imgiu;
+                        resultDescr = '당신이 닮은 연예인은 바로!';
                         break;
-                    case "redvelvet-seulki" :
-                        resultMessege = "레드벨벳 슬기";
-                        resultImage = imgredvelvetseulki;
+                    case "redvelvet-joy" :
+                        resultMessege = "레드벨벳 조이";
+                        resultImage = imgredvelvetjoy;
+                        resultDescr = '당신이 닮은 연예인은 바로!';
                         break;
                     case "park-su-jin" :
                         resultMessege = "박수진";
                         resultImage = imgparksujin;
+                        resultDescr = '당신이 닮은 연예인은 바로!';
                         break;
                     case "seo-hyun-jin" :
                         resultMessege = "서현진";
                         resultImage = imgseohyunjin;
+                        resultDescr = '당신이 닮은 연예인은 바로!';
                         break;
                     case "sin-min-a" :
                         resultMessege = "신민아";
                         resultImage = imgsinmina;
+                        resultDescr = '당신이 닮은 연예인은 바로!';
+                        break;
+                    case "song-hye-kyo" :
+                        resultMessege = "송혜교";
+                        resultImage = imgsonghyekyo;
+                        resultDescr = '당신이 닮은 연예인은 바로!';
                         break;
                     case "sana" :
                         resultMessege = "트와이스 사나";
                         resultImage = imgsana;
+                        resultDescr = '당신이 닮은 연예인은 바로!';
                         break;
                     case "son-na-eun" :
                         resultMessege = "손나은";
                         resultImage = imgsonnaeun;
+                        resultDescr = '당신이 닮은 연예인은 바로!';
                         break;
                     case "son-ye-jin" :
                         resultMessege = "손예진";
                         resultImage = imgsonyejin;
+                        resultDescr = '당신이 닮은 연예인은 바로!';
                         break;
                     case "twice-mina" :
                         resultMessege = "트와이스 미나";
                         resultImage = imgtwicemina;
+                        resultDescr = '당신이 닮은 연예인은 바로!';
                         break;
                     case "yoo-in-na" :
                         resultMessege = "유인나";
                         resultImage = imgyuinna;
+                        resultDescr = '당신이 닮은 연예인은 바로!';
                         break;
                     case "yoon-a" :
                         resultMessege = "소녀시대 윤아";
                         resultImage = imgyoona;
+                        resultDescr = '당신이 닮은 연예인은 바로!';
                         break;
                     case "suzy" :
                         resultMessege = "수지";
                         resultImage = imgsuzy;
+                        resultDescr = '당신이 닮은 연예인은 바로!';
                         break;
                     case "tzuy" :
                         resultMessege = "트와이스 쯔위";
                         resultImage = imgtzuy;
-                        break;
-                    case "yui" :
-                        resultMessege = "유이";
-                        resultImage = imgyui;
+                        resultDescr = '당신이 닮은 연예인은 바로!';
                         break;   
+                    case "sul-hyun" :
+                        resultMessege = "설현"
+                        resultImage = imgsulhyun;
+                        resultDescr = '당신이 닮은 연예인은 바로!';
+                        break;
+                    case "omygirl-arin" :
+                        resultMessege = "오마이걸 아린"
+                        resultImage = imgomygirlarin;
+                        resultDescr = '당신이 닮은 연예인은 바로!';
+                        break;
+                    case "kang-hye-won" :
+                        resultMessege = "아이즈원 강혜원"
+                        resultImage = imgkanghyewon;
+                        resultDescr = '당신이 닮은 연예인은 바로!';
+                        break;
                     default:
                         resultMessege = "알수없음";
                 }
                 $('.result-messege').html(resultMessege);
                 $('.result-image').html(resultImage);
+                $('.result-descr').html(resultDescr);
             }
         </script>
     </body>

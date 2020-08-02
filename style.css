@@ -24,6 +24,7 @@ a {
 a:visited {
     color:black;
 }
+
 .file-upload {
     background-color: #ffffff;
     width: 100%;
@@ -73,7 +74,10 @@ a:visited {
     opacity: 0;
     cursor: pointer;
 }
-
+#face-image {
+    border: 1rem solid gray;
+    margin-top:1rem;
+}
 .image-upload-wrap {
     margin: 5rem auto;
     border: 0.3rem solid lightgray;
@@ -113,7 +117,7 @@ a:visited {
 }
 
 .remove-image {
-    width: 10rem;
+    width: 12rem;
     margin: 0;
     color: #fff;
     background: lightskyblue;
@@ -137,6 +141,9 @@ a:visited {
 .remove-image:active {
     border: 0;
     transition: all 0.2s ease;
+}
+.try-again {
+    font-size: 1rem;
 }
 .upload {
     width: 60%;
@@ -206,19 +213,19 @@ input[id="menuicon"]:checked + label span:nth-child(3) {
     transform:translateY(50%) rotate(-45deg);
 }
 div[class="sidebar"] {
-    width:18rem; 
-    height:80%;
+    width:15rem; 
+    height:70%;
     background:linen;
     position:fixed;
     top:-100%;
-    left:0.5rem;
+    left:0.6rem;
     z-index:2;
     transition:all .35s;
     border-radius:1rem;
     border:1px solid lightslategray;
 }
 input[id="menuicon"]:checked + label + div {
-    top: 7.6rem;
+    top: 7.8rem;
 }
 /*menu-end*/
 
@@ -242,7 +249,7 @@ input[id="menuicon"]:checked + label + div {
 .result-image {
     display: block;
     margin: 0 auto;
-    width: 30rem;
+    width: 20rem;
     height: auto;
     margin-bottom: 0.5rem;
     border: 0.8rem solid aquamarine;
