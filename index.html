@@ -11,6 +11,9 @@
             type="text/javascript"
             src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-5f266097864de941"
         ></script>
+        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.1/js/bootstrap.min.js" integrity="sha384-XEerZL0cuoUbHE4nZReLT7nx9gQrQreJekYhJD9WNWhH8nEW+0c5qq7aIo2Wl30J" crossorigin="anonymous"></script>
     </head>
     <body>
         <header class="header">
@@ -50,6 +53,14 @@
             src="https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"
         ></script>
         <div class="file-upload">
+    <h3 class="e-flex">성별을 선택하세요</h3>
+    <section class="d-flex">
+        <div class="toggle">
+            <input type="checkbox" id="gender">
+            <label for="gender">
+            </label>
+        </div>
+    </section>
             <div class="image-upload-wrap">
                 <input
                     class="file-upload-input"
@@ -123,16 +134,20 @@
             });
         </script>
         <script type="text/javascript">
-            // More API functions here:
-            // https://github.com/googlecreativelab/teachablemachine-community/tree/master/libraries/image
+            let URL;
+        const urlMale = "https://teachablemachine.withgoogle.com/models/d2ZQoKX34/";
+        const urlFemale = "https://teachablemachine.withgoogle.com/models/JyIpdnoVH/";
+           
 
-            // the link to your model provided by Teachable Machine export panel
-            const URL = 'https://teachablemachine.withgoogle.com/models/JyIpdnoVH/';
-
-            let model, webcam, labelContainer, maxPredictions;
+            let model, labelContainer, maxPredictions;
 
             // Load the image model and setup the webcam
             async function init() {
+                if (document.getElementById("gender").checked) {
+                URL = urlMale;
+            } else {
+                URL = urlFemale;
+            }
                 const modelURL = URL + 'model.json';
                 const metadataURL = URL + 'metadata.json';
 
@@ -144,7 +159,8 @@
                 maxPredictions = model.getTotalClasses();
                 labelContainer = document.getElementById('label-container');
                 for (let i = 0; i < maxPredictions; i++) {
-                    // and class labels
+                   var element = document.createElement("div")
+                element.classList.add("d-flex");
                     labelContainer.appendChild(document.createElement('div'));
                 }
             }
@@ -233,9 +249,9 @@
                 //random rabbit//
                 var randomRabbit = [
                     'img/rabbit/suzy.png',
-                    'img/rabbit/nayeon.png',
-                    'img/rabbit/irine.png',
-                    'img/rabbit/rosi.png',
+                    'img/rabbit/nayeon.jpeg',
+                    'img/rabbit/irine.jpg',
+                    'img/rabbit/rosi.jpg',
                 ];
                 function getImgRabbit() {
                     var img = '<img src="';
@@ -244,13 +260,131 @@
                     img += '" alt="Some alt text" style="width:100%;"/>';
                     return img;
                 }
+                
+                /* male */
+                var randomDino = [
+                    'img/dino/gongyu.jpg',
+                    'img/dino/kimsungo.jpg',
+                    'img/dino/kimubin.jpg',
+                    'img/dino/parkseojun.jpg',
+                ];
+                function getImgDino() {
+                    var img = '<img src="';
+                    var randomIndex = Math.floor(Math.random() * randomDino.length);
+                    img += randomDino[randomIndex];
+                    img += '" alt="Some alt text" style="width:100%;"/>';
+                    return img;
+                }
+                var randomMCat = [
+                    'img/mcat/kangdongwon.jpg',
+                    'img/mcat/key.jpeg',
+                    'img/mcat/kimheechul.jpg',
+                    'img/mcat/kimsuhyun.jpg',
+                ];
+                function getImgMCat() {
+                    var img = '<img src="';
+                    var randomIndex = Math.floor(Math.random() * randomMCat.length);
+                    img += randomMCat[randomIndex];
+                    img += '" alt="Some alt text" style="width:100%;"/>';
+                    return img;
+                }
+                var randomMFox = [
+                    'img/mfox/jico.jpg',
+                    'img/mfox/leejunki.jpg',
+                    'img/mfox/parksihu.jpg',
+                    'img/mfox/seoinguk.jpg',
+                ];
+                function getImgMFox() {
+                    var img = '<img src="';
+                    var randomIndex = Math.floor(Math.random() * randomMFox.length);
+                    img += randomMFox[randomIndex];
+                    img += '" alt="Some alt text" style="width:100%;"/>';
+                    return img;
+                }
+                var randomHorse = [
+                    'img/horse/chaseungwon.jpeg',
+                    'img/horse/choisiwon.jpg',
+                    'img/horse/kimdongwan.jpg',
+                    'img/horse/kimsungsoo.jpg',
+                ];
+                function getImgHorse() {
+                    var img = '<img src="';
+                    var randomIndex = Math.floor(Math.random() * randomHorse.length);
+                    img += randomHorse[randomIndex];
+                    img += '" alt="Some alt text" style="width:100%;"/>';
+                    return img;
+                }
+                var randomMonkey = [
+                    'img/monkey/gdragon.jpg',
+                    'img/monkey/jihyunwoo.jpg',
+                    'img/monkey/tonyahn.jpg',
+                    'img/monkey/uain.jpg',
+                ];
+                function getImgMonkey() {
+                    var img = '<img src="';
+                    var randomIndex = Math.floor(Math.random() * randomMonkey.length);
+                    img += randomMonkey[randomIndex];
+                    img += '" alt="Some alt text" style="width:100%;"/>';
+                    return img;
+                }
+                
                 var ranPuppy = getImgPuppy();
                 var ranFox = getImgFox();
                 var ranDeer = getImgDeer();
                 var ranDfox = getImgDfox();
                 var ranCat = getImgCat();
                 var ranRabbit = getImgRabbit();
+                
+                var ranDino = getImgDino();
+                var ranMFox = getImgMFox();
+                var ranMonkey = getImgMonkey();
+                var ranHorse = getImgHorse();
+                var ranMCat = getImgMCat();
+                 if (document.getElementById("gender").checked) {
                 switch (prediction[0].className) {
+                    case 'dino':
+                        resultMessege = '공룡상';
+                        resultImage = ranDino;
+                        resultDescription =
+                            '남성미 물씬 풍기는 외모의, 큼직큼직한 이목구비를 소유한 당신, 남자다우시네요!';
+                        resultCeleb =
+                            '공룡상 연예인 : 공류, 김성오, 김우빈, 박서준, etc..';
+                        /*귀엽고 사랑스러운 매력의 강아지상*/
+                        break;
+                    case 'fox':
+                        resultMessege = '여우상';
+                        resultImage = ranMFox;
+                        resultDescription =
+                            '치명적일 정도로 매력적인 눈매의 소유자! 섹시한 남자란 바로 이런 남자!';
+                        resultCeleb = '여우상 연예인 : 지코, 이준기, 박시후, 서인국, etc..';
+                        break;
+                    case 'horse':
+                        resultMessege = '말상';
+                        resultImage = ranHorse;
+                        resultDescription =
+                            '시원시원한 남자다운 인상의 소유자! 남자의 매력이 물씬 풍기네요!';
+                        resultCeleb = '말상 연예인 : 차승원, 최시원, 김성수, 신화 김동완, etc..';
+                        /*보호 본능을 자극하는 사슴상*/
+                        break;
+                    case 'monkey':
+                        resultMessege = '원숭이상';
+                        resultImage = ranMonkey;
+                        resultDescription = '개구장이 같으면서도, 듬직하고 멋있는 매력을 가지셨네요!';
+                        resultCeleb = '원숭이상 연예인 : 지드래곤, 지현우, 토니안, 유아인, etc..';
+                        /*발랄하고 생기 넘치는 토끼상*/
+                        break;
+                    case 'cat':
+                        resultMessege = '고양이상';
+                        resultImage = ranMCat;
+                        resultDescription = '도도한 매력을 지닌, 사랑할수 밖에 없는 당신!';
+                        resultCeleb = '고양이상 연예인 : 강동원, 샤이니 키, 김희철, 김수현, etc..';
+                        /*우아하고 도회적인 이미지의 고양이상*/
+                        break;
+                    default:
+                        resultMessege = '알수없음';
+                }
+                 } else {
+                      switch (prediction[0].className) {
                     case 'puppy':
                         resultMessege = '강아지상';
                         resultImage = ranPuppy;
@@ -280,7 +414,7 @@
                         resultImage = ranDfox;
                         resultDescription =
                             '귀여우면서도 한편으론 치명적인 매력을 가진 분이시네요!';
-                        resulCeleb = '사막여우상 연예인 : 지수, 제니, etc..';
+                        resultCeleb = '사막여우상 연예인 : 지수, 제니, etc..';
                         break;
                     case 'rabbit':
                         resultMessege = '토끼상';
@@ -299,6 +433,7 @@
                     default:
                         resultMessege = '알수없음';
                 }
+                 }
                 $('.result-messege').html(resultMessege);
                 $('.result-image').html(resultImage);
                 $('.result-descr').html(resultDescription);
