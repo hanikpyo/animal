@@ -11,13 +11,7 @@ img {
 }
 ul li {
     list-style:none;
-    font-size:1.5rem;
-    font-family: 'Bazzi';
-    margin-right:1.5rem;
-    margin-bottom:5rem;
-    margin-left:-1rem;
     padding:0;
-    text-align:center;
 }
 a {
     text-decoration:none;
@@ -79,6 +73,7 @@ input[id="gender"]:checked + label:after {
 }
 .e-flex {
     text-align:center;
+    font-size:2rem;
 }
 .toggle {
     margin:0 auto;
@@ -94,6 +89,7 @@ input[id="gender"]:checked + label:after {
 
 .file-upload-btn {
     width: 100%;
+
     margin: 0;
     color: #fff;
     background: #1fb264;
@@ -141,7 +137,7 @@ input[id="gender"]:checked + label:after {
     margin: 4rem auto;
     border: 0.3rem solid lightgray;
     position: relative;
-    height: 20rem;
+    height: 30rem;
     border-radius: 1rem;
     width:40rem;
 }
@@ -205,10 +201,10 @@ input[id="gender"]:checked + label:after {
     font-size: 1rem;
 }
 .upload {
-    width: 60%;
-    height: 80%;
-    margin-left: 7rem;
-    margin-top: 2.5rem;
+    width: 80%;
+    height: 100%;
+    margin-left: 4rem;
+    margin-top: 4rem;
 }
 .header {
     display:inline-block;
@@ -234,7 +230,8 @@ input[id="menuicon"] + label {
     height: 3rem;
     position: relative;
     cursor:pointer;
-    z-index:1;
+    z-index:2;
+    margin-top:1rem;
 }
 input[id="menuicon"] + label span {
     display:block;
@@ -272,20 +269,26 @@ input[id="menuicon"]:checked + label span:nth-child(3) {
     transform:translateY(50%) rotate(-45deg);
 }
 div[class="sidebar"] {
-    width:8rem; 
-    height:30%;
-    background:linen;
+    width:12rem; 
+    height:30rem;
+    background:white;
     position:absolute;
     top:-100%;
-    z-index:2;
+    z-index:1;
     transition:all .35s;
     border-radius:1rem;
     border:1px solid lightslategray;
-    margin-left:-2.2rem;
 }
 input[id="menuicon"]:checked + label + div {
-    top: 7.5rem;
-    right:0.1rem;
+    top: 8rem;
+    right:2rem;
+}
+.sidebar-ul {
+    margin-top:-0.5rem;
+    font-size:2.5rem;
+    margin-left:-6rem;
+    line-height:10rem;
+    font-family: 'MaplestoryOTFBold';
 }
 /*menu-end*/
 
@@ -296,18 +299,18 @@ input[id="menuicon"]:checked + label + div {
     margin-left: 3rem;
 }
 .logo-img {
-    height: 3.5rem;
+    height: 6rem;
     width:auto;
 }
 .header-title {
     text-align: center;
-    font-size: 5rem;
+    font-size: 7rem;
     font-family: 'MaplestoryOTFBold';
     display:inline-block;
 }
 .description {
     text-align: center;
-    font-size: 2rem;
+    font-size: 3.5rem;
     font-family: 'fromdamiM';
     margin:0 auto;
      width:100%;
@@ -316,16 +319,16 @@ input[id="menuicon"]:checked + label + div {
 }
 .subdescr {
     text-align: center;
-    font-size: 1rem;
+    font-size: 2rem;
     font-family: 'yg-jalnan';
     margin:0 auto;
-     width:35%;
+     width:70%;
     margin-bottom:0.3rem;
     margin-top:0.5rem;
 }
 .warning {
     text-align: center;
-    font-size: 0.8rem;
+    font-size: 1.5rem;
     font-family: 'yg-jalnan';
     margin:0 auto;
      width:40%;
@@ -342,18 +345,18 @@ input[id="menuicon"]:checked + label + div {
     border-radius: 0.5rem;
 }
 .result-messege {
-    font-size: 3rem;
+    font-size: 3.5rem;
     font-family: 'yg-jalnan';
     margin-bottom: 1rem;
 }
 .result-descr {
-    font-size: 1.5rem;
+    font-size: 2.5rem;
     font-family: 'Bazzi';
     margin-bottom: 1rem;
     margin-top: 1rem;
 }
 .result-celeb {
-    font-size: 1.3rem;
+    font-size: 2rem;
     margin-bottom: 2rem;
     font-family: 'fromdamiM';
 }
