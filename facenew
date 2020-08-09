@@ -1,0 +1,40 @@
+https://teachablemachine.withgoogle.com/models/_fHzE_QwB/
+
+https://teachablemachine.withgoogle.com/models/tk-8sx6lH/
+https://teachablemachine.withgoogle.com/models/Oy4--EYzt/
+
+ if (prediction[0].probability > 0.8 && prediction[0].probability < 0.9) {
+                            resultMessege = '상위' + '&nbsp' + '30%';
+                            resultDescription = '훌륭하네요!';
+                        } else if (prediction[0].probability > 0.9 && prediction[0].probability < 0.95) {
+                            resultMessege = '상위' + '&nbsp' + '25%';
+                            resultDescription = '어디서 이쁘다는 말좀 들어보셨겠어요~';
+                        } else if (prediction[0].probability > 0.95 && prediction[0].probability < 1) {
+                            resultMessege = '상위' + '&nbsp' + '15~20%';
+                            resultDescription = '어딜가도 꿇리지 않는 외모!';
+                        }
+                        case 'beuty':
+                        if (prediction[0].probability > 0.97 && prediction[0].probability < 1) {
+                            resultMessege =
+                                '상위' +
+                                '&nbsp' +
+                                ((1 - prediction[0].probability) * 100).toFixed(2) +
+                                '%';
+                            resultDescription = '말이 되나요 이게??' + '<br>' + '연예인보다도 이쁘시네요!';
+                        } else if (prediction[0].probability > 0.95 && prediction[0].probability < 0.97) {
+                            resultMessege =
+                                '상위' +
+                                '&nbsp' +
+                                ((1 - prediction[0].probability) * 100).toFixed(2) +
+                                '%';
+                            resultDescription = '혹시 연예인 아니세요???';
+                        } else {
+                            resultMessege =
+                                '상위' +
+                                '&nbsp' +
+                                '5%';
+                            resultDescription = '배우하셔도 되겠어요~!';
+                        }
+                        break;
+                        
+                        https://teachablemachine.withgoogle.com/models/14hHqIa0h/

@@ -11,9 +11,21 @@
             type="text/javascript"
             src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-5f266097864de941"
         ></script>
-        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.1/js/bootstrap.min.js" integrity="sha384-XEerZL0cuoUbHE4nZReLT7nx9gQrQreJekYhJD9WNWhH8nEW+0c5qq7aIo2Wl30J" crossorigin="anonymous"></script>
+        <script
+            src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+            integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+            crossorigin="anonymous"
+        ></script>
+        <script
+            src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
+            integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN"
+            crossorigin="anonymous"
+        ></script>
+        <script
+            src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.1/js/bootstrap.min.js"
+            integrity="sha384-XEerZL0cuoUbHE4nZReLT7nx9gQrQreJekYhJD9WNWhH8nEW+0c5qq7aIo2Wl30J"
+            crossorigin="anonymous"
+        ></script>
     </head>
     <body>
         <header class="header">
@@ -39,21 +51,28 @@
                 얼굴평가 by AI
             </div>
         </header>
-<div class="description">
-    인공지능이 평가해주는 얼굴 순위입니다.
-    <div class="subdescr">
-        사진을 업로드 하시면 인공지능이 대한민국 상위 몇프로인지 판별해드립니다!<br>
-        (재미로 하는거니 혹시라도 상처받지 마세요~)
-    </div>
-    <div class="warning">
-        (업로드 하신 사진은 어떠한 경우로도 저장되거나 수집되지 않습니다.)
-    </div>
+        <div class="description">
+            인공지능이 평가해주는 얼굴 순위입니다.
+            <div class="subdescr">
+                사진을 업로드 하시면 인공지능이 대한민국 상위 몇프로인지 판별해드립니다!<br />
+                (재미로 하는거니 혹시라도 상처받지 마세요~)
+            </div>
+            <div class="warning">
+                (업로드 하신 사진은 어떠한 경우로도 저장되거나 수집되지 않습니다.)
+            </div>
         </div>
         <script
             class="jsbin"
             src="https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"
         ></script>
         <div class="file-upload">
+            <h3 class="e-flex">성별을 선택하세요</h3>
+            <section class="d-flex">
+                <div class="toggle">
+                    <input type="checkbox" id="gender" />
+                    <label for="gender"> </label>
+                </div>
+            </section>
             <div class="image-upload-wrap">
                 <input
                     class="file-upload-input"
@@ -83,13 +102,10 @@
                         <span class="try-again">다시 해보기~</span>
                     </button>
                 </div>
-
-                
             </div>
             <!-- Go to www.addthis.com/dashboard to customize your tools -->
-                <div class="addthis_inline_share_toolbox_bqaa" style="text-align:center;"></div>
+            <div class="addthis_inline_share_toolbox_bqaa" style="text-align: center;"></div>
         </div>
-        
 
         <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@1.3.1/dist/tf.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/@teachablemachine/image@0.8/dist/teachablemachine-image.min.js"></script>
@@ -131,14 +147,18 @@
         <script src="https://cdn.jsdelivr.net/npm/@teachablemachine/image@0.8/dist/teachablemachine-image.min.js"></script>
         <script type="text/javascript">
             // More API functions here:
-            // https://github.com/googlecreativelab/teachablemachine-community/tree/master/libraries/image
-
-            // the link to your model provided by Teachable Machine export panel
-            const URL = 'https://teachablemachine.withgoogle.com/models/_fHzE_QwB/';
+            let URL;
+            const urlMale = 'https://teachablemachine.withgoogle.com/models/14hHqIa0h/';
+            const urlFemale = 'https://teachablemachine.withgoogle.com/models/tk-8sx6lH/';
 
             let model, webcam, labelContainer, maxPredictions;
             // Load the image model and setup the webcam
             async function init() {
+                if (document.getElementById('gender').checked) {
+                    URL = urlMale;
+                } else {
+                    URL = urlFemale;
+                }
                 const modelURL = URL + 'model.json';
                 const metadataURL = URL + 'metadata.json';
 
@@ -148,9 +168,11 @@
                 // Note: the pose library adds "tmImage" object to your window (window.tmImage)
                 model = await tmImage.load(modelURL, metadataURL);
                 maxPredictions = model.getTotalClasses();
+                // append elements to the DOM
                 labelContainer = document.getElementById('label-container');
                 for (let i = 0; i < maxPredictions; i++) {
-                    // and class labels
+                    var element = document.createElement('div');
+                    element.classList.add('d-flex');
                     labelContainer.appendChild(document.createElement('div'));
                 }
             }
@@ -165,56 +187,108 @@
 
                 var resultMessege;
                 var resultDescription;
-                switch (prediction[0].className) {
-                    case 'bad':
-                        resultMessege =
-                            '대한민국 평균' + '&nbsp' + '40%';
-                        resultDescription = '평균 이상이시네요!';
-                        break;
-                        break;
-                    case 'normal':
-                        if (prediction[0].probability > 0.8 && prediction[0].probability < 0.9) {
-                            resultMessege = '상위' + '&nbsp' + '30%';
-                            resultDescription = '훌륭하네요!';
-                        } else if (prediction[0].probability > 0.9 && prediction[0].probability < 0.95) {
-                            resultMessege = '상위' + '&nbsp' + '25%';
-                            resultDescription = '어디서 이쁘다는 말좀 들어보셨겠어요~';
-                        } else if (prediction[0].probability > 0.95 && prediction[0].probability < 1) {
-                            resultMessege = '상위' + '&nbsp' + '15~20%';
-                            resultDescription = '어딜가도 꿇리지 않는 외모!';
-                        }
-                        break;
-                    case 'ugly':
-                        resultMessege =
-                            '대한민국 평균' + '&nbsp' + '50%';
-                        resultDescription = '잘 안나온 사진을 쓰셨나봐요';
-                        break;
-                    case 'beuty':
-                        if (prediction[0].probability > 0.97 && prediction[0].probability < 1) {
-                            resultMessege =
-                                '상위' +
-                                '&nbsp' +
-                                ((1 - prediction[0].probability) * 100).toFixed(2) +
-                                '%';
-                            resultDescription = '말이 되나요 이게??' + '<br>' + '연예인보다도 이쁘시네요!';
-                        } else if (prediction[0].probability > 0.95 && prediction[0].probability < 0.97) {
-                            resultMessege =
-                                '상위' +
-                                '&nbsp' +
-                                ((1 - prediction[0].probability) * 100).toFixed(2) +
-                                '%';
-                            resultDescription = '혹시 연예인 아니세요???';
-                        } else {
-                            resultMessege =
-                                '상위' +
-                                '&nbsp' +
-                                '5%';
-                            resultDescription = '배우하셔도 되겠어요~!';
-                        }
-                        break;
+                if (document.getElementById('gender').checked) {
+                    switch (prediction[0].className) {
+                        case 'Class 001':
+                            resultMessege = '대한민국 상위' + '&nbsp' + '0.1%';
+                            resultDescription = '연예인보다 잘생기셨네요!';
+                            break;
 
-                    default:
-                        resultMessege = '알수없음';
+                        case 'Class 002':
+                            resultMessege = '대한민국 평균' + '&nbsp' + '1%';
+                            resultDescription = '연예인 아니세요?';
+                            break;
+                        case 'Class 003':
+                            resultMessege = '대한민국 상위' + '&nbsp' + '5%';
+                            resultDescription = '와우 연예인 하셔도 되겠어요!';
+                            break;
+
+                        case 'Class 004':
+                            resultMessege = '대한민국 상위' + '&nbsp' + '10%';
+                            resultDescription = '모델이신가요? 정말 대단한 외모네요!';
+                            break;
+                        case 'Class 005':
+                            resultMessege = '대한민국 상위' + '&nbsp' + '15%';
+                            resultDescription = '어딜가든 주목 받으시겠어요!';
+                            break;
+
+                        case 'Class 006':
+                            resultMessege = '대한민국 상위' + '&nbsp' + '20%';
+                            resultDescription = '혹시 sns 스타이신가요?';
+                            break;
+
+                        case 'Class 007':
+                            resultMessege = '대한민국 상위' + '&nbsp' + '25%';
+                            resultDescription = '훈남소리 많이 들으셨을거 같네요!';
+                            break;
+
+                        case 'Class 008':
+                            resultMessege = '대한민국 평균' + '&nbsp' + '30%';
+                            resultDescription = '이정도면 훌륭하죠!';
+                            break;
+                        case 'Class 009':
+                            resultMessege = '대한민국 평균' + '&nbsp' + '40%';
+                            resultDescription = '평균은 넘으시네요';
+                            break;
+
+                        case 'Class 010':
+                            resultMessege = '대한민국 평균' + '&nbsp' + '50%';
+                            resultDescription = '이정도면 괜찮아요';
+                            break;
+                        default:
+                            resultMessege = '알수없음';
+                    }
+                } else {
+                    switch (prediction[0].className) {
+                        case 'Class 1':
+                            resultMessege = '대한민국 상위' + '&nbsp' + '0.1%';
+                            resultDescription = '연예인보다 더 아름다우세요!';
+                            break;
+
+                        case 'Class 2':
+                            resultMessege = '대한민국 평균' + '&nbsp' + '1%';
+                            resultDescription = '정말 엄청나네요! 연예인 아니세요?';
+                            break;
+                        case 'Class 3':
+                            resultMessege = '대한민국 상위' + '&nbsp' + '5%';
+                            resultDescription = '배우하셔도 되겠어요!!';
+                            break;
+
+                        case 'Class 4':
+                            resultMessege = '대한민국 상위' + '&nbsp' + '10%';
+                            resultDescription = '모델이신가요? 정말이지 엄청나네요!';
+                            break;
+                        case 'Class 5':
+                            resultMessege = '대한민국 상위' + '&nbsp' + '15%';
+                            resultDescription = '시선강탈! 엄청납니다!';
+                            break;
+
+                        case 'Class 6':
+                            resultMessege = '대한민국 상위' + '&nbsp' + '20%';
+                            resultDescription = '혹시 sns 스타이신가요?';
+                            break;
+
+                        case 'Class 7':
+                            resultMessege = '대한민국 상위' + '&nbsp' + '25%';
+                            resultDescription = '훈녀소리 많이 들으셨을거 같네요!';
+                            break;
+
+                        case 'Class 8':
+                            resultMessege = '대한민국 평균' + '&nbsp' + '30%';
+                            resultDescription = '이정도면 훌륭하죠!';
+                            break;
+                        case 'Class 9':
+                            resultMessege = '대한민국 평균' + '&nbsp' + '40%';
+                            resultDescription = '평균은 넘으시네요';
+                            break;
+
+                        case 'Class 10':
+                            resultMessege = '대한민국 평균' + '&nbsp' + '50%';
+                            resultDescription = '이정도면 괜찮아요';
+                            break;
+                        default:
+                            resultMessege = '알수없음';
+                    }
                 }
                 $('.result-messege').html(resultMessege);
                 $('.result-descr').html(resultDescription);
