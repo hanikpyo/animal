@@ -37,11 +37,18 @@
                     <span></span>
                 </label>
                 <div class="sidebar">
-                    <ul class="sidebar-ul">
-                        <li><a href="index.html">동물상</a></li>
-                        <li><a href="celeb.html">닮은꼴</a></li>
-                        <li><a href="face.html">얼굴평가</a></li>
-                    </ul>
+                    <div class="sidemenu">
+                        Menu
+                    </div>
+                    <div class="sidebar-ul">
+                        <a href="index.html">동물상 판별기</a>
+                    </div>
+                    <div class="sidebar-il">
+                        <a href="celeb.html">연예인 닮은꼴</a>
+                    </div>
+                    <div class="sidebar-ol">
+                        <a href="face.html">얼굴평가 By AI</a>
+                    </div>
                 </div>
             </div>
             <div class="header-logo">
@@ -66,7 +73,6 @@
             src="https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"
         ></script>
         <div class="file-upload">
-            
             <section class="d-flex">
                 <h3 class="e-flex">성별을 선택하세요</h3>
                 <div class="toggle">
@@ -121,7 +127,7 @@
                         $('.image-title').html(input.files[0].name);
                     };
                     reader.readAsDataURL(input.files[0]);
-                     $('.d-flex').hide();
+                    $('.d-flex').hide();
                     init().then(() => {
                         console.log('hello');
                         predict();
@@ -193,11 +199,11 @@
                     switch (prediction[0].className) {
                         case 'Class 001':
                             resultMessege = '대한민국 상위' + '&nbsp' + '0.1%';
-                            resultDescription = '연예인보다 잘생기셨네요!';
+                            resultDescription = '웬만한 연예인보다 더 잘생기셨네요!';
                             break;
 
                         case 'Class 002':
-                            resultMessege = '대한민국 평균' + '&nbsp' + '1%';
+                            resultMessege = '대한민국 상위' + '&nbsp' + '1%';
                             resultDescription = '연예인 아니세요?';
                             break;
                         case 'Class 003':
@@ -225,7 +231,7 @@
                             break;
 
                         case 'Class 008':
-                            resultMessege = '대한민국 평균' + '&nbsp' + '30%';
+                            resultMessege = '대한민국 상위' + '&nbsp' + '30%';
                             resultDescription = '이정도면 훌륭하죠!';
                             break;
                         case 'Class 009':
@@ -244,12 +250,12 @@
                     switch (prediction[0].className) {
                         case 'Class 1':
                             resultMessege = '대한민국 상위' + '&nbsp' + '0.1%';
-                            resultDescription = '연예인보다 더 아름다우세요!';
+                            resultDescription = '말이 되나요 이게? 연예인보다 더 아름다우세요!';
                             break;
 
                         case 'Class 2':
-                            resultMessege = '대한민국 평균' + '&nbsp' + '1%';
-                            resultDescription = '정말 엄청나네요! 연예인 아니세요?';
+                            resultMessege = '대한민국 상위' + '&nbsp' + '1%';
+                            resultDescription = '정말 엄청나네요! 연예인 맞죠??';
                             break;
                         case 'Class 3':
                             resultMessege = '대한민국 상위' + '&nbsp' + '5%';
@@ -262,7 +268,7 @@
                             break;
                         case 'Class 5':
                             resultMessege = '대한민국 상위' + '&nbsp' + '15%';
-                            resultDescription = '시선강탈! 엄청납니다!';
+                            resultDescription = '어딜가도 인기 많으시겠어요!';
                             break;
 
                         case 'Class 6':
@@ -276,17 +282,17 @@
                             break;
 
                         case 'Class 8':
-                            resultMessege = '대한민국 평균' + '&nbsp' + '30%';
-                            resultDescription = '이정도면 훌륭하죠!';
+                            resultMessege = '대한민국 상위' + '&nbsp' + '30%';
+                            resultDescription = '상위 30%면 정말 엄청난거에요!';
                             break;
                         case 'Class 9':
-                            resultMessege = '대한민국 평균' + '&nbsp' + '40%';
-                            resultDescription = '평균은 넘으시네요';
+                            resultMessege = '대한민국 상위' + '&nbsp' + '40%';
+                            resultDescription = '평균 이상이시네요~';
                             break;
 
                         case 'Class 10':
                             resultMessege = '대한민국 평균' + '&nbsp' + '50%';
-                            resultDescription = '이정도면 괜찮아요';
+                            resultDescription = '예쁜 사람이 넘쳐나는 나라에서 이정도면 됐죠 뭐..';
                             break;
                         default:
                             resultMessege = '알수없음';
