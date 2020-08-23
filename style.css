@@ -402,6 +402,10 @@ input[id="menuicon"]:checked + label + div {
     width:100%;
     margin-top:1rem;
 }
+.footer-coupang {
+    display: inline-block;
+    margin: 0 auto;
+}
 .footer-ada {
     width:320px;
     margin:0 auto;
