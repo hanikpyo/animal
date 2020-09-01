@@ -405,6 +405,7 @@ input[id="menuicon"]:checked + label + div {
 .footer-coupang {
     display: inline-block;
     margin: 0 auto;
+    text-align:center;
 }
 .footer-ada {
     width:320px;
