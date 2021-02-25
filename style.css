@@ -84,34 +84,6 @@ input[id="gender"]:checked + label:after {
     border-radius:1rem;
 }
 
-.file-upload-btn {
-    width: 100%;
-
-    margin: 0;
-    color: #fff;
-    background: #1fb264;
-    border: none;
-    padding: 1rem;
-    border-radius: 0.3rem;
-    border-bottom: 0.3rem solid #15824b;
-    transition: all 0.2s ease;
-    outline: none;
-    text-transform: uppercase;
-    font-weight: 700;
-}
-
-.file-upload-btn:hover {
-    background: #1aa059;
-    color: #ffffff;
-    transition: all 0.2s ease;
-    cursor: pointer;
-}
-
-.file-upload-btn:active {
-    border: 0;
-    transition: all 0.2s ease;
-}
-
 .file-upload-content {
     display: none;
     text-align: center;
